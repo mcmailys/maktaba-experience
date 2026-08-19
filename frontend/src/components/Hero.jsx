@@ -23,18 +23,6 @@ export default function Hero() {
       data-testid="hero-section"
       className="relative min-h-[85vh] flex flex-col justify-end overflow-hidden"
     >
-      <motion.p
-        aria-hidden
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.16 }}
-        transition={{ delay: 1.2, duration: 2, ease: EASE }}
-        className="absolute inset-x-0 top-[9%] text-center font-arabic leading-none text-[#D4AF37] select-none pointer-events-none whitespace-nowrap z-10"
-        style={{ fontSize: "clamp(4.5rem, 16vw, 17rem)" }}
-        data-testid="hero-arabic-overlay"
-      >
-        {author.nameArabic}
-      </motion.p>
-
       <div className="absolute inset-x-0 top-0 h-[68%]">
         <motion.img
           initial={{ opacity: 0, scale: 1.06 }}
@@ -58,16 +46,29 @@ export default function Hero() {
       </p>
 
       <div className="relative z-10 px-6 pb-20 text-center">
-        <h1
-          data-testid="hero-title"
-          className="font-display font-medium uppercase leading-[1.04] tracking-[0.04em] text-[#F2EBE5]"
-          style={{ fontSize: "clamp(2.4rem, 7.5vw, 5.25rem)" }}
-        >
-          <MaskedLine delay={0.4}>Ibn Qayyim</MaskedLine>
-          <MaskedLine delay={0.55}>
-            <span className="italic text-[#D4AF37]">Al-Jawziyyah</span>
-          </MaskedLine>
-        </h1>
+        <div className="relative">
+          <motion.p
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.16 }}
+            transition={{ delay: 1.2, duration: 2, ease: EASE }}
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-20 text-center font-arabic leading-none text-[#D4AF37] select-none pointer-events-none whitespace-nowrap"
+            style={{ fontSize: "clamp(4.5rem, 16vw, 15rem)" }}
+            data-testid="hero-arabic-overlay"
+          >
+            {author.nameArabic}
+          </motion.p>
+          <h1
+            data-testid="hero-title"
+            className="relative z-10 font-display font-medium uppercase leading-[1.04] tracking-[0.04em] text-[#F2EBE5]"
+            style={{ fontSize: "clamp(2.4rem, 7.5vw, 5.25rem)" }}
+          >
+            <MaskedLine delay={0.4}>Ibn Qayyim</MaskedLine>
+            <MaskedLine delay={0.55}>
+              <span className="italic text-[#D4AF37]">Al-Jawziyyah</span>
+            </MaskedLine>
+          </h1>
+        </div>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
