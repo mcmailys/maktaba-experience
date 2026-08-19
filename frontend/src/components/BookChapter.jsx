@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  useScroll,
-  useSpring,
-  useMotionValueEvent,
-} from "framer-motion";
+import { useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import { BookMarked, BookOpen, FileText, Globe } from "lucide-react";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -21,6 +17,13 @@ export default function BookChapter() {
   const [isTouch] = useState(
     () => window.matchMedia("(pointer: coarse)").matches
   );
+  const [hasAlpha] = useState(() => {
+    const isSafari = /^((?!chrome|chromium|android).)*safari/i.test(
+      navigator.userAgent
+    );
+    const probe = document.createElement("video");
+    return !isSafari && probe.canPlayType('video/webm; codecs="vp9"') !== "";
+  });
 
   useEffect(() => {
     const video = videoRef.current;
@@ -61,13 +64,28 @@ export default function BookChapter() {
   });
 
   return (
-    <section id="oeuvre" data-testid="book-chapter" className="relative pt-32">
+    <section id="oeuvre" data-testid="book-chapter" className="relative pt-24">
       <div className="mx-auto max-w-xl px-6">
         <SectionHeading number="03" title="Son Œuvre" />
       </div>
 
-      <div ref={wrapRef} className="relative" style={{ height: "240vh" }} data-testid="book-video-scrollzone">
+      <div
+        ref={wrapRef}
+        className="relative"
+        style={{ height: "160vh" }}
+        data-testid="book-video-scrollzone"
+      >
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
+          {hasAlpha && (
+            <div className="absolute inset-0" aria-hidden data-testid="book-bg-image">
+              <img
+                src="/assets/library-bg.jpg"
+                alt=""
+                className="w-full h-full object-cover opacity-30"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/55 to-[#0B0C10]" />
+            </div>
+          )}
           <video
             ref={videoRef}
             poster="/assets/book-poster.jpg"
@@ -75,8 +93,9 @@ export default function BookChapter() {
             playsInline
             preload="auto"
             data-testid="book-video"
-            className="relative z-10 max-h-[64vh] w-auto max-w-[82vw]"
+            className="relative z-10 max-h-[60vh] w-auto max-w-[82vw]"
           >
+            <source src="/assets/book-alpha.webm" type="video/webm" />
             <source src="/assets/book-rotate.mp4" type="video/mp4" />
             <source src="/assets/book-rotate.webm" type="video/webm" />
           </video>
@@ -94,7 +113,7 @@ export default function BookChapter() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-xl px-6 pb-32 text-center">
+      <div className="mx-auto max-w-xl px-6 pb-24 text-center">
         <Reveal>
           <h2
             className="font-display font-medium uppercase tracking-[0.06em] text-[#F2EBE5] text-4xl sm:text-5xl"
