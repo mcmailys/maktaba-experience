@@ -13,7 +13,6 @@ import {
   Graticule,
   Sphere,
   Marker,
-  Line,
   ZoomableGroup,
 } from "react-simple-maps";
 
@@ -26,29 +25,6 @@ function lerpColor(a, b, t) {
   return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(",")})`;
 }
 
-function arcCoords(from, to, lift = 0.16, steps = 26) {
-  const [x1, y1] = from;
-  const [x2, y2] = to;
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  const dist = Math.hypot(dx, dy);
-  const px = -dy / dist;
-  const py = dx / dist;
-  const pts = [];
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const m = Math.sin(Math.PI * t) * dist * lift;
-    pts.push([x1 + dx * t + px * m, y1 + dy * t + py * m]);
-  }
-  return pts;
-}
-
-const ROUTES = [
-  { name: "ISTANBUL", to: [28.9784, 41.0082] },
-  { name: "LE CAIRE", to: [31.2357, 30.0444] },
-  { name: "BAGDAD", to: [44.3661, 33.3152] },
-].map((r) => ({ ...r, coords: arcCoords(DAMASCUS, r.to) }));
-
 export default function MapChapter() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -60,7 +36,6 @@ export default function MapChapter() {
   const lonRaw = useTransform(scrollYProgress, [0.05, 0.85], [12, DAMASCUS[0]]);
   const latRaw = useTransform(scrollYProgress, [0.05, 0.85], [32, DAMASCUS[1]]);
   const glowRaw = useTransform(scrollYProgress, [0.45, 0.7], [0, 1]);
-  const routesRaw = useTransform(scrollYProgress, [0.58, 0.68], [0, 1]);
   const markerRaw = useTransform(scrollYProgress, [0.72, 0.84], [0, 1]);
 
   const zoomSpring = useSpring(zoomRaw, SPRING);
@@ -70,7 +45,6 @@ export default function MapChapter() {
   const [zoom, setZoom] = useState(1);
   const [center, setCenter] = useState([12, 32]);
   const [glow, setGlow] = useState(0);
-  const [routesVisible, setRoutesVisible] = useState(false);
   const [markerOn, setMarkerOn] = useState(0);
 
   useMotionValueEvent(zoomSpring, "change", setZoom);
@@ -81,7 +55,6 @@ export default function MapChapter() {
     setCenter([lonSpring.get(), latSpring.get()])
   );
   useMotionValueEvent(glowRaw, "change", setGlow);
-  useMotionValueEvent(routesRaw, "change", (v) => setRoutesVisible(v > 0.5));
   useMotionValueEvent(markerRaw, "change", setMarkerOn);
 
   const titleOpacity = useTransform(scrollYProgress, [0, 0.16, 0.3], [1, 1, 0]);
@@ -100,195 +73,149 @@ export default function MapChapter() {
       className="relative"
       style={{ height: "340vh" }}
     >
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden px-6">
-        <motion.div style={{ opacity: titleOpacity, y: titleY }} className="text-center mb-8">
-          <p
-            className="font-mono-archive text-[11px] tracking-[0.4em] uppercase text-[#D4AF37]"
-            data-testid="section-heading-02"
-          >
-            02 — Son Lieu
-          </p>
-          <h2 className="mt-8 font-display font-light text-3xl sm:text-4xl lg:text-5xl leading-tight text-[#F2EBE5]">
-            Damas,
-            <br />
-            <span className="italic text-[#D4AF37]">au cœur des terres du Shâm</span>
-          </h2>
-        </motion.div>
-
+      <div className="sticky top-0 h-screen overflow-hidden">
         <div
-          className="relative w-full max-w-3xl border border-white/10 bg-[#0B0C10] shadow-[0_40px_120px_rgba(0,0,0,0.8)] overflow-hidden"
+          className="absolute inset-0 map-fade pointer-events-none"
           data-testid="damascus-map-frame"
         >
-          <div className="pointer-events-none">
-            <ComposableMap
-              projection="geoMercator"
-              projectionConfig={{ scale: 150 }}
-              width={900}
-              height={560}
-              style={{ width: "100%", height: "auto", display: "block" }}
-            >
-              <ZoomableGroup center={center} zoom={zoom} minZoom={1} maxZoom={10}>
-                <Sphere stroke="#2A2A2A" strokeWidth={0.5 / zoom} fill="#0B0C10" id="sphere" />
-                <Graticule stroke="#D4AF37" strokeOpacity={0.06} strokeWidth={0.4 / zoom} />
-                <Geographies geography="/world-110m.json">
-                  {({ geographies }) =>
-                    geographies.map((geo) => {
-                      const isSyria =
-                        geo.properties.name === "Syria" || geo.id === "760";
-                      return (
-                        <Geography
-                          key={geo.rsmKey}
-                          geography={geo}
-                          fill={isSyria ? syriaFill : "#14161C"}
-                          stroke={isSyria ? syriaStroke : "#2A2D34"}
-                          strokeWidth={(isSyria ? 0.9 : 0.5) / zoom}
-                          data-testid={isSyria ? "syria-shape" : undefined}
-                          style={{
-                            default: {
-                              outline: "none",
-                              filter:
-                                isSyria && glow > 0.25
-                                  ? `drop-shadow(0 0 ${10 * glow}px rgba(212,175,55,${0.85 * glow}))`
-                                  : "none",
-                            },
-                            hover: { outline: "none" },
-                            pressed: { outline: "none" },
-                          }}
-                        />
-                      );
-                    })
-                  }
-                </Geographies>
-
-                <g className={routesVisible ? "routes-visible" : ""} data-testid="golden-routes">
-                  {ROUTES.map((route, i) => (
-                    <Line
-                      key={route.name}
-                      coordinates={route.coords}
-                      fill="none"
-                      stroke="#D4AF37"
-                      strokeWidth={1.1 / zoom}
-                      className="route-line"
-                      data-testid={`route-${route.name.toLowerCase().replace(" ", "-")}`}
-                      style={{
-                        animationDelay: `${i * 0.45}s`,
-                        filter: "drop-shadow(0 0 3px rgba(212,175,55,0.6))",
-                      }}
-                    />
-                  ))}
-                  {ROUTES.map((route, i) => (
-                    <Marker key={route.name} coordinates={route.to}>
-                      <circle
-                        r={2.2 / zoom}
-                        fill="#D4AF37"
-                        className="route-end"
+          <ComposableMap
+            projection="geoMercator"
+            projectionConfig={{ scale: 260 }}
+            width={1600}
+            height={900}
+            preserveAspectRatio="xMidYMid slice"
+            style={{ width: "100%", height: "100%", display: "block" }}
+          >
+            <ZoomableGroup center={center} zoom={zoom} minZoom={1} maxZoom={10}>
+              <Sphere stroke="#2A2A2A" strokeWidth={0.5 / zoom} fill="#0B0C10" id="sphere" />
+              <Graticule stroke="#D4AF37" strokeOpacity={0.06} strokeWidth={0.4 / zoom} />
+              <Geographies geography="/world-110m.json">
+                {({ geographies }) =>
+                  geographies.map((geo) => {
+                    const isSyria =
+                      geo.properties.name === "Syria" || geo.id === "760";
+                    return (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        fill={isSyria ? syriaFill : "#14161C"}
+                        stroke={isSyria ? syriaStroke : "#2A2D34"}
+                        strokeWidth={(isSyria ? 0.9 : 0.5) / zoom}
+                        data-testid={isSyria ? "syria-shape" : undefined}
                         style={{
-                          transitionDelay: `${1.4 + i * 0.45}s`,
-                          filter: "drop-shadow(0 0 4px rgba(212,175,55,0.8))",
+                          default: {
+                            outline: "none",
+                            filter:
+                              isSyria && glow > 0.25
+                                ? `drop-shadow(0 0 ${10 * glow}px rgba(212,175,55,${0.85 * glow}))`
+                                : "none",
+                          },
+                          hover: { outline: "none" },
+                          pressed: { outline: "none" },
                         }}
                       />
-                      <text
-                        textAnchor="middle"
-                        y={-6 / zoom}
-                        className="route-label"
-                        style={{
-                          transitionDelay: `${1.8 + i * 0.45}s`,
-                          fontFamily: "IBM Plex Mono, monospace",
-                          fontSize: 6 / zoom,
-                          letterSpacing: "0.25em",
-                          fill: "#F2EBE5",
-                          paintOrder: "stroke",
-                          stroke: "#0B0C10",
-                          strokeWidth: 2.5 / zoom,
-                        }}
-                      >
-                        {route.name}
-                      </text>
-                    </Marker>
-                  ))}
-                </g>
-
-                {markerOn > 0.02 && (
-                  <Marker coordinates={DAMASCUS}>
-                    <motion.circle
-                      r={4 / zoom}
-                      fill="none"
-                      stroke="#F2EBE5"
-                      strokeWidth={0.8 / zoom}
-                      initial={{ r: 4 / zoom, opacity: 0.9 }}
-                      animate={{ r: 30 / zoom, opacity: 0 }}
-                      transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
-                    />
-                    <motion.circle
-                      r={4 / zoom}
-                      fill="none"
-                      stroke="#F2EBE5"
-                      strokeWidth={0.8 / zoom}
-                      initial={{ r: 4 / zoom, opacity: 0.9 }}
-                      animate={{ r: 30 / zoom, opacity: 0 }}
-                      transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut", delay: 1.2 }}
-                    />
-                    <circle
-                      r={3.4 / zoom}
-                      fill="#0B0C10"
-                      stroke="#F2EBE5"
-                      strokeWidth={1 / zoom}
-                      data-testid="damascus-marker"
-                      style={{ filter: "drop-shadow(0 0 5px rgba(11,12,16,0.9))" }}
-                    />
-                    <g opacity={markerOn} data-testid="damascus-label">
-                      <text
-                        textAnchor="middle"
-                        y={-16 / zoom}
-                        style={{
-                          fontFamily: "IBM Plex Mono, monospace",
-                          fontSize: 11 / zoom,
-                          letterSpacing: "0.3em",
-                          fill: "#F2EBE5",
-                          paintOrder: "stroke",
-                          stroke: "#0B0C10",
-                          strokeWidth: 3.5 / zoom,
-                        }}
-                      >
-                        DAMAS
-                      </text>
-                      <text
-                        textAnchor="middle"
-                        y={-7 / zoom}
-                        style={{
-                          fontFamily: "IBM Plex Mono, monospace",
-                          fontSize: 6.5 / zoom,
-                          letterSpacing: "0.2em",
-                          fill: "rgba(242,235,229,0.9)",
-                          paintOrder: "stroke",
-                          stroke: "#0B0C10",
-                          strokeWidth: 3 / zoom,
-                        }}
-                      >
-                        SYRIE — 33.51° N, 36.27° E
-                      </text>
-                    </g>
-                  </Marker>
-                )}
-              </ZoomableGroup>
-            </ComposableMap>
-          </div>
-          <div
-            className="absolute bottom-3 left-4 font-mono-archive text-[10px] tracking-[0.25em] text-[#A39E93]/70"
-            data-testid="map-zoom-readout"
-          >
-            ZOOM ×{zoom.toFixed(1)} — {center[1].toFixed(2)}° N, {center[0].toFixed(2)}° E
-          </div>
+                    );
+                  })
+                }
+              </Geographies>
+              {markerOn > 0.02 && (
+                <Marker coordinates={DAMASCUS}>
+                  <motion.circle
+                    r={4 / zoom}
+                    fill="none"
+                    stroke="#F2EBE5"
+                    strokeWidth={0.8 / zoom}
+                    initial={{ r: 4 / zoom, opacity: 0.9 }}
+                    animate={{ r: 30 / zoom, opacity: 0 }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
+                  />
+                  <motion.circle
+                    r={4 / zoom}
+                    fill="none"
+                    stroke="#F2EBE5"
+                    strokeWidth={0.8 / zoom}
+                    initial={{ r: 4 / zoom, opacity: 0.9 }}
+                    animate={{ r: 30 / zoom, opacity: 0 }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut", delay: 1.2 }}
+                  />
+                  <circle
+                    r={3.4 / zoom}
+                    fill="#0B0C10"
+                    stroke="#F2EBE5"
+                    strokeWidth={1 / zoom}
+                    data-testid="damascus-marker"
+                    style={{ filter: "drop-shadow(0 0 5px rgba(11,12,16,0.9))" }}
+                  />
+                  <g opacity={markerOn} data-testid="damascus-label">
+                    <text
+                      textAnchor="middle"
+                      y={-16 / zoom}
+                      style={{
+                        fontFamily: "IBM Plex Mono, monospace",
+                        fontSize: 11 / zoom,
+                        letterSpacing: "0.3em",
+                        fill: "#F2EBE5",
+                        paintOrder: "stroke",
+                        stroke: "#0B0C10",
+                        strokeWidth: 3.5 / zoom,
+                      }}
+                    >
+                      DAMAS
+                    </text>
+                    <text
+                      textAnchor="middle"
+                      y={-7 / zoom}
+                      style={{
+                        fontFamily: "IBM Plex Mono, monospace",
+                        fontSize: 6.5 / zoom,
+                        letterSpacing: "0.2em",
+                        fill: "rgba(242,235,229,0.9)",
+                        paintOrder: "stroke",
+                        stroke: "#0B0C10",
+                        strokeWidth: 3 / zoom,
+                      }}
+                    >
+                      SYRIE — 33.51° N, 36.27° E
+                    </text>
+                  </g>
+                </Marker>
+              )}
+            </ZoomableGroup>
+          </ComposableMap>
         </div>
 
-        <motion.p
-          style={{ opacity: captionOpacity, y: captionY }}
-          className="mt-10 max-w-xl text-center text-sm sm:text-base font-light leading-relaxed text-[#A39E93]"
-          data-testid="map-caption"
-        >
-          C'est à Damas qu'il naît, qu'il enseigne, qu'il est emprisonné — et à
-          Damas qu'il s'éteint. Une vie entière tient entre ces murs.
-        </motion.p>
+        <div className="relative z-10 h-full flex flex-col items-center justify-between py-24 px-6 pointer-events-none">
+          <motion.div style={{ opacity: titleOpacity, y: titleY }} className="text-center mt-10">
+            <p
+              className="font-mono-archive text-[11px] tracking-[0.4em] uppercase text-[#D4AF37]"
+              data-testid="section-heading-02"
+            >
+              02 — Son Lieu
+            </p>
+            <h2 className="mt-8 font-display font-light text-3xl sm:text-4xl lg:text-5xl leading-tight text-[#F2EBE5]">
+              Damas,
+              <br />
+              <span className="italic text-[#D4AF37]">au cœur des terres du Shâm</span>
+            </h2>
+          </motion.div>
+
+          <div className="flex flex-col items-center gap-8">
+            <motion.p
+              style={{ opacity: captionOpacity, y: captionY }}
+              className="max-w-xl text-center text-sm sm:text-base font-light leading-relaxed text-[#A39E93]"
+              data-testid="map-caption"
+            >
+              C'est à Damas qu'il naît, qu'il enseigne, qu'il est emprisonné —
+              et à Damas qu'il s'éteint. Une vie entière tient entre ces murs.
+            </motion.p>
+            <p
+              className="font-mono-archive text-[10px] tracking-[0.25em] text-[#A39E93]/70"
+              data-testid="map-zoom-readout"
+            >
+              ZOOM ×{zoom.toFixed(1)} — {center[1].toFixed(2)}° N, {center[0].toFixed(2)}° E
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
