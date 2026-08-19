@@ -61,8 +61,8 @@ export default function BookChapter() {
   });
 
   return (
-    <section id="oeuvre" data-testid="book-chapter" className="relative pt-24">
-      <div className="mx-auto max-w-xl px-6">
+    <section id="oeuvre" data-testid="book-chapter" className="relative pt-20">
+      <div className="mx-auto max-w-xl px-6 -mb-10">
         <SectionHeading number="03" title="Son Œuvre" />
       </div>
 
@@ -112,6 +112,12 @@ export default function BookChapter() {
           </h2>
           <p className="mt-4 font-mono-archive text-[11px] tracking-[0.35em] uppercase text-[#D4AF37]">
             Ibn al-Qayyim
+          </p>
+          <p
+            className="mt-3 font-mono-archive text-[10px] tracking-[0.25em] uppercase text-[#A39E93]"
+            data-testid="book-written-date"
+          >
+            {author.book.written}
           </p>
         </Reveal>
 

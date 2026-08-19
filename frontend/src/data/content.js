@@ -10,13 +10,14 @@ export const authors = [
     city: "Damas",
     heroPortrait: "/assets/hero-portrait.jpg",
     book: {
-      title: "Meditations",
+      title: "Les Méditations",
       titleArabic: "الفوائد",
       image: "/assets/book-standing.jpg",
       langue: "Français",
       edition: "Tawbah",
       pages: "~ 600",
       price: "15 €",
+      written: "Écrit à Damas — XIVᵉ siècle",
       description:
         "Un chef-d'œuvre de la spiritualité islamique, un guide intemporel vers la connaissance de soi et d'Allah.",
     },

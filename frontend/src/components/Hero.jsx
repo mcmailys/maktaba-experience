@@ -30,7 +30,7 @@ export default function Hero() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 2.2, ease: EASE }}
           src={author.heroPortrait}
-          alt="Portrait à l'huile d'Ibn al-Qayyim"
+          alt="Portrait à l'huile d'Ibn Qayyim al-Jawziyyah"
           data-testid="hero-portrait"
           className="w-full h-full object-cover object-top md:object-contain"
         />
@@ -45,14 +45,28 @@ export default function Hero() {
         Explorer le savoir, transmettre la lumière.
       </p>
 
+      <motion.p
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.09 }}
+        transition={{ delay: 1.4, duration: 2, ease: EASE }}
+        className="absolute inset-x-0 bottom-[14%] text-center font-arabic leading-none text-[#D4AF37] select-none pointer-events-none whitespace-nowrap"
+        style={{ fontSize: "clamp(4.5rem, 16vw, 17rem)" }}
+        data-testid="hero-arabic-overlay"
+      >
+        {author.nameArabic}
+      </motion.p>
+
       <div className="relative z-10 px-6 pb-12 text-center">
         <h1
           data-testid="hero-title"
           className="font-display font-medium uppercase leading-[1.04] tracking-[0.04em] text-[#F2EBE5]"
-          style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)" }}
+          style={{ fontSize: "clamp(2.4rem, 7.5vw, 5.25rem)" }}
         >
-          <MaskedLine delay={0.4}>Ibn</MaskedLine>
-          <MaskedLine delay={0.55}>al-Qayyim</MaskedLine>
+          <MaskedLine delay={0.4}>Ibn Qayyim</MaskedLine>
+          <MaskedLine delay={0.55}>
+            <span className="italic text-[#D4AF37]">Al-Jawziyyah</span>
+          </MaskedLine>
         </h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}

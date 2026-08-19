@@ -149,10 +149,10 @@ export default function MapChapter() {
                   <g opacity={markerOn} data-testid="damascus-label">
                     <text
                       textAnchor="middle"
-                      y={-14 / zoom}
+                      y={-26 / zoom}
                       style={{
                         fontFamily: "IBM Plex Mono, monospace",
-                        fontSize: 17 / zoom,
+                        fontSize: 24 / zoom,
                         letterSpacing: "0.3em",
                         fill: "#F2EBE5",
                         fontWeight: 500,
@@ -162,10 +162,10 @@ export default function MapChapter() {
                     </text>
                     <text
                       textAnchor="middle"
-                      y={-4 / zoom}
+                      y={-13 / zoom}
                       style={{
                         fontFamily: "IBM Plex Mono, monospace",
-                        fontSize: 8 / zoom,
+                        fontSize: 10.5 / zoom,
                         letterSpacing: "0.2em",
                         fill: "rgba(242,235,229,0.85)",
                       }}

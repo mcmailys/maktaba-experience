@@ -1,9 +1,25 @@
+import { useEffect, useRef } from "react";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { timelineEvents } from "../data/content";
 
 export default function TimelineChapter() {
+  const trackRef = useRef(null);
   const items = [...timelineEvents, ...timelineEvents];
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) track.classList.add("timeline-running");
+      },
+      { threshold: 0.15 }
+    );
+    obs.observe(track);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section id="histoire" data-testid="timeline-chapter" className="relative py-32 overflow-visible">
       <div className="absolute inset-x-0 top-0 -bottom-40" aria-hidden>
@@ -22,7 +38,7 @@ export default function TimelineChapter() {
         </div>
 
         <Reveal data-testid="timeline-track-wrapper">
-          <div className="timeline-track" data-testid="timeline-track">
+          <div ref={trackRef} className="timeline-track" data-testid="timeline-track">
             {items.map((event, i) => (
               <div
                 key={`${event.year}-${i}`}

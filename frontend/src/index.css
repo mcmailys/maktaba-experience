@@ -114,8 +114,12 @@ html.lenis body {
     display: flex;
     width: max-content;
     animation: timeline-scroll 42s linear infinite;
+    animation-play-state: paused;
 }
-.timeline-track:hover {
+.timeline-track.timeline-running {
+    animation-play-state: running;
+}
+.timeline-track.timeline-running:hover {
     animation-play-state: paused;
 }
 
