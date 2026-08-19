@@ -1,0 +1,114 @@
+{
+  "theme": "dark",
+  "typography": {
+    "headings": "Cormorant Garamond",
+    "subheadings_arabic": "Amiri",
+    "body": "Manrope",
+    "hierarchy": {
+      "h1": "text-5xl sm:text-6xl+ tracking-tighter font-light leading-none",
+      "h2": "text-3xl sm:text-4xl+ tracking-tight font-medium",
+      "h3": "text-xl sm:text-2xl font-normal",
+      "body": "text-base leading-relaxed font-light",
+      "overline": "text-xs tracking-[0.2em] uppercase font-bold text-[#D4AF37]"
+    },
+    "notes": "Do not use Inter, Roboto, or generic sans-serif for headings. Emphasize elegance and tension with Cormorant Garamond for headings and Amiri for Arabic/calligraphic titles."
+  },
+  "colors": {
+    "background": "#0B0C10",
+    "surface": "#13151A",
+    "primary_accent": "#D4AF37",
+    "text_primary": "#F2EBE5",
+    "text_secondary": "#A39E93",
+    "border": "#2A2A2A",
+    "notes": "Deep ink/charcoal background for an archival feel. Gold/calligraphy accents. No bright neon colors."
+  },
+  "visual_enhancers": {
+    "textures": "Subtle noise/grain overlay on the background to kill digital flatness and enhance the 'archive' aesthetic.",
+    "borders": "1px solid borders with 10% opacity (border-white/10) to separate sections without heavy shadows.",
+    "shadows": "Minimal ambient shadow. Prefer sharp, crisp boundaries or very soft, dark diffuse shadows.",
+    "gradients": "Avoid full-screen glossy gradients. Use radial gradients strictly for soft spotlighting behind key elements (like the book or the map dot)."
+  },
+  "components": {
+    "header": "Glassmorphism: backdrop-blur-xl bg-[#0B0C10]/70. 1px bottom border border-white/10.",
+    "buttons": "Pill-shaped or sharp rectangular, bordered with primary_accent (Gold), transparent background, hover:bg-[#D4AF37] hover:text-[#0B0C10] transition-colors duration-300.",
+    "cards": "Flat solid surfaces (bg-[#13151A]) with 1px border-white/10, no heavy drop shadow. Use neo-brutalist or minimalist archival spacing."
+  },
+  "layouts": {
+    "hero": "Kinetic hero. Large typography with line-by-line masked reveal on load (framer-motion). Subtle parallax background image of Islamic calligraphy with bg-black/60 overlay so text is highly readable.",
+    "author_section": "Immersive scroll-triggered section. The author's representation (manuscript texture) fades and translates up on scroll. Text beside it details his legacy.",
+    "map_and_timeline": "A vertical timeline drawing down as the user scrolls. Marks 1292 to 1350. Next to it, an SVG map or antique map image with a pulsing gold dot (Framer Motion scale + opacity animation) specifically placed on Damascus, Syria.",
+    "manifesto_chapters": "Numbered manifesto chapters using a Bento grid ('The Tetris Grid'). Asymmetrical, mixing tall and wide cards to break monotony.",
+    "book_showcase": "The book ('Les Méditations') slides up and floats on scroll. Includes a reader/excerpt section mimicking turning pages or elegant text layout.",
+    "marquee": "Slow editorial marquee. Serif font, uppercase, separated by gold bullets. E.g., 'SAGESSE • SPIRITUALITÉ • MÉDITATIONS • PATRIMOINE ISLAMIQUE'. Use react-fast-marquee.",
+    "order_form": "Clean, minimal Shadcn-based form with custom styling (dark backgrounds, gold borders on focus) for ordering the book."
+  },
+  "motion": {
+    "scroll": "Mandatory use of @studio-freight/lenis for momentum scrolling.",
+    "animations": "Framer Motion for all reveal effects. Line-by-line text reveals (using overflow-hidden wrappers and y-axis translation). Parallax on images. Staggered reveals for Bento grid items.",
+    "hover": "Subtle scale-up (scale-105) for images, opacity shifts for text links, inverted colors for buttons."
+  },
+  "accessibility": {
+    "contrast": "Ensure text_primary and text_secondary meet APCA standards against the dark background.",
+    "focus": "Focus states must use ring-2 ring-[#D4AF37].",
+    "testing": "All interactive elements MUST include data-testid attributes (e.g., data-testid='order-button')."
+  },
+  "media": {
+    "images": [
+      {
+        "url": "https://images.pexels.com/photos/20785886/pexels-photo-20785886.jpeg",
+        "category": "hero_background",
+        "description": "Elegant Islamic calligraphy in gold on a modern black wall. Use as the hero parallax background with heavy dark overlay."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1720701574998-d68020bce2bd",
+        "category": "author_texture",
+        "description": "Ancient arabic calligraphy on parchment. Use as a textural element or masked shape for the author section to represent Ibn al-Qayyim."
+      },
+      {
+        "url": "https://images.pexels.com/photos/33039807/pexels-photo-33039807.jpeg",
+        "category": "map_texture",
+        "description": "Antique map texture. Use as a background for the Damascus map section, blending with SVG elements."
+      },
+      {
+        "url": "https://images.pexels.com/photos/8200898/pexels-photo-8200898.jpeg",
+        "category": "book_mockup",
+        "description": "A collection of Arabic books arranged vertically on a black background. Representing the book 'Les Méditations'."
+      },
+      {
+        "url": "https://images.pexels.com/photos/35769732/pexels-photo-35769732.jpeg",
+        "category": "book_preview",
+        "description": "Vintage leather-bound books. Used in the excerpt/consultation section."
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Build a one-page scroll experience (landing page) for the Islamic book 'Les Méditations' by Ibn al-Qayyim.",
+    "Install and setup @studio-freight/lenis for smooth scrolling. Wrap the app in a Lenis provider.",
+    "Install framer-motion and react-fast-marquee.",
+    "Use pure HTML + Tailwind for structural layouts to achieve asymmetry. Do not rely entirely on rigid Shadcn Cards for the main narrative flow.",
+    "Use Shadcn strictly for the Order Form (Input, Form, Button, Select).",
+    "Hero Section: Implement a kinetic text reveal. Text must be wrapped in hidden overflow containers and slide up via Framer Motion on mount.",
+    "Timeline & Map: Create a visually striking scroll-linked timeline. Use an SVG or the provided antique map image with a pulsing absolute-positioned dot (animated with Framer Motion) to indicate Damascus.",
+    "Book Reveal: Use Framer Motion useScroll and useTransform to make the book image translate into the viewport smoothly as the user reaches the section.",
+    "Typography: Apply Cormorant Garamond for main headings (h1, h2) and Manrope for body text. Use Amiri for any Arabic script or decorative subheadings.",
+    "No generic centering: Align text based on optical balance, use generous padding (p-12, p-16, p-24) to let the design breathe."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms. Always add transitions for specific interactive elements like button, input excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Missing categories (especially sponsor logos) = main agent will use placeholder text which is FORBIDDEN. Always use the provided image URLs.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Use sonner for toasts, located in /app/src/components/ui/sonner.js if needed.",
+    "All interactive and key informational elements MUST include a data-testid attribute to facilitate robust automated testing."
+  ]
+}

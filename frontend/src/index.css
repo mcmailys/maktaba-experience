@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 222 18% 5%;
+        --foreground: 33 30% 92%;
+        --card: 220 13% 9%;
+        --card-foreground: 33 30% 92%;
+        --popover: 220 13% 9%;
+        --popover-foreground: 33 30% 92%;
+        --primary: 43 65% 52%;
+        --primary-foreground: 222 18% 5%;
+        --secondary: 220 10% 14%;
+        --secondary-foreground: 33 30% 92%;
+        --muted: 220 10% 14%;
+        --muted-foreground: 40 8% 62%;
+        --accent: 43 65% 52%;
+        --accent-foreground: 222 18% 5%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 16%;
+        --input: 0 0% 16%;
+        --ring: 43 65% 52%;
+        --radius: 0.25rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+        margin: 0;
+        font-family: "Manrope", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #0B0C10;
+    }
+    ::selection {
+        background: #D4AF37;
+        color: #0B0C10;
+    }
+}
+
+.font-display {
+    font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.font-arabic {
+    font-family: "Amiri", serif;
+}
+
+.font-body {
+    font-family: "Manrope", system-ui, sans-serif;
+}
+
+.font-mono-archive {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+/* Grain / noise overlay */
+.grain-overlay {
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain-shift 9s steps(6) infinite;
+}
+
+@keyframes grain-shift {
+    0%, 100% { transform: translate(0, 0); }
+    20% { transform: translate(-2%, 2%); }
+    40% { transform: translate(2%, -1%); }
+    60% { transform: translate(-1%, -2%); }
+    80% { transform: translate(1%, 2%); }
+}
+
+/* Slow editorial marquee */
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 75s linear infinite;
+}
+
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+/* Thin archival scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0B0C10;
+}
+::-webkit-scrollbar-thumb {
+    background: #2A2A2A;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+
+    [data-debug-wrapper="true"] > * {
+        margin-left: inherit;
+        margin-right: inherit;
+        margin-top: inherit;
+        margin-bottom: inherit;
+        padding-left: inherit;
+        padding-right: inherit;
+        padding-top: inherit;
+        padding-bottom: inherit;
+        column-gap: inherit;
+        row-gap: inherit;
+        gap: inherit;
+        border-left-width: inherit;
+        border-right-width: inherit;
+        border-top-width: inherit;
+        border-bottom-width: inherit;
+        border-left-style: inherit;
+        border-right-style: inherit;
+        border-top-style: inherit;
+        border-bottom-style: inherit;
+        border-left-color: inherit;
+        border-right-color: inherit;
+        border-top-color: inherit;
+        border-bottom-color: inherit;
+    }
+}
