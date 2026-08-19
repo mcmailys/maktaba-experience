@@ -14,7 +14,7 @@ export default function TimelineChapter() {
       ([entry]) => {
         if (entry.isIntersecting) track.classList.add("timeline-running");
       },
-      { threshold: 0.15 }
+      { threshold: 0.02 }
     );
     obs.observe(track);
     return () => obs.disconnect();

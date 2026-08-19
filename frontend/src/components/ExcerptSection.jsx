@@ -11,7 +11,7 @@ export default function ExcerptSection() {
   const current = excerptPages[page];
 
   return (
-    <section id="extrait" data-testid="excerpt-section" className="relative py-32">
+    <section id="extrait" data-testid="excerpt-section" className="relative pt-16 pb-32">
       <div className="mx-auto max-w-xl px-6 text-center">
         <SectionHeading number="04" title="Lire un Extrait" />
         <Reveal>

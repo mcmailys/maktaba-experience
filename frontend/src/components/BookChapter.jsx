@@ -1,6 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useScroll, useSpring, useMotionValueEvent } from "framer-motion";
-import { BookMarked, BookOpen, FileText, Globe } from "lucide-react";
+import {
+  BookMarked,
+  FileText,
+  Globe,
+  Minus,
+  Plus,
+  ShoppingBag,
+} from "lucide-react";
+import { toast } from "sonner";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { author } from "../data/content";
@@ -20,6 +28,7 @@ export default function BookChapter() {
   const canvasRef = useRef(null);
   const imagesRef = useRef([]);
   const targetRef = useRef(0);
+  const [qty, setQty] = useState(1);
 
   const draw = (index) => {
     const canvas = canvasRef.current;
@@ -60,6 +69,15 @@ export default function BookChapter() {
     draw(index);
   });
 
+  const addToCart = () => {
+    localStorage.setItem("mirath_qty", String(qty));
+    window.dispatchEvent(new CustomEvent("mirath:cart", { detail: qty }));
+    toast.success(
+      `${qty} exemplaire${qty > 1 ? "s" : ""} ajouté${qty > 1 ? "s" : ""} au panier`
+    );
+    document.querySelector("#commande")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section id="oeuvre" data-testid="book-chapter" className="relative pt-20">
       <div className="mx-auto max-w-xl px-6 -mb-10">
@@ -77,9 +95,9 @@ export default function BookChapter() {
             <img
               src="/assets/library-bg.jpg"
               alt=""
-              className="w-full h-full object-cover opacity-30"
+              className="w-full h-full object-cover opacity-45"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/55 to-[#0B0C10]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/35 to-[#0B0C10]" />
           </div>
           <canvas
             ref={canvasRef}
@@ -144,13 +162,49 @@ export default function BookChapter() {
         </Reveal>
 
         <Reveal delay={0.2}>
+          <div
+            className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-5"
+            data-testid="product-actions"
+          >
+            <div className="flex items-center border border-white/25">
+              <button
+                onClick={() => setQty((q) => Math.max(1, q - 1))}
+                data-testid="quantity-decrease-button"
+                aria-label="Diminuer la quantité"
+                className="px-4 py-3.5 text-[#A39E93] hover:text-[#D4AF37] transition-colors duration-300"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span
+                className="w-10 text-center font-mono-archive text-sm text-[#F2EBE5]"
+                data-testid="quantity-value"
+              >
+                {qty}
+              </span>
+              <button
+                onClick={() => setQty((q) => Math.min(5, q + 1))}
+                data-testid="quantity-increase-button"
+                aria-label="Augmenter la quantité"
+                className="px-4 py-3.5 text-[#A39E93] hover:text-[#D4AF37] transition-colors duration-300"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+            <button
+              onClick={addToCart}
+              data-testid="add-to-cart-button"
+              className="inline-flex items-center gap-3 bg-[#D4AF37] text-[#0B0C10] px-8 py-4 font-mono-archive text-[11px] tracking-[0.25em] uppercase hover:bg-[#F2EBE5] transition-colors duration-300"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              Ajouter au panier — {author.book.price}
+            </button>
+          </div>
           <a
             href="#extrait"
             data-testid="discover-excerpt-button"
-            className="mt-12 inline-flex items-center gap-3 border border-white/25 px-8 py-4 font-mono-archive text-[11px] tracking-[0.3em] uppercase text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors duration-300"
+            className="mt-6 inline-block text-sm font-light text-[#A39E93] underline decoration-[#D4AF37]/50 underline-offset-4 hover:text-[#D4AF37] transition-colors duration-300"
           >
-            <BookOpen className="h-4 w-4" />
-            Découvrir l'extrait
+            Feuilleter l'extrait
           </a>
         </Reveal>
       </div>

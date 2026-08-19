@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { ArrowRight, Check } from "lucide-react";
@@ -15,6 +15,16 @@ export default function OrderSection() {
   const [form, setForm] = useState({ name: "", email: "", quantity: 1, message: "" });
   const [sending, setSending] = useState(false);
   const [receipt, setReceipt] = useState(null);
+
+  useEffect(() => {
+    const apply = (q) => {
+      if (q >= 1 && q <= 5) setForm((f) => ({ ...f, quantity: q }));
+    };
+    apply(parseInt(localStorage.getItem("mirath_qty") || "1", 10));
+    const onCart = (e) => apply(e.detail);
+    window.addEventListener("mirath:cart", onCart);
+    return () => window.removeEventListener("mirath:cart", onCart);
+  }, []);
 
   const update = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
 
