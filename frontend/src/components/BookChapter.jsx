@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import {
   useScroll,
   useSpring,
@@ -18,6 +18,14 @@ const meta = [
 export default function BookChapter() {
   const wrapRef = useRef(null);
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const prime = () => video.play().then(() => video.pause()).catch(() => {});
+    if (video.readyState >= 1) prime();
+    else video.addEventListener("loadedmetadata", prime, { once: true });
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: wrapRef,
@@ -45,14 +53,10 @@ export default function BookChapter() {
 
       <div ref={wrapRef} className="relative" style={{ height: "240vh" }} data-testid="book-video-scrollzone">
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-          <div
-            aria-hidden
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[520px] w-[520px] rounded-full"
-            style={{ background: "radial-gradient(closest-side, rgba(212,175,55,0.14), transparent)" }}
-          />
           <video
             ref={videoRef}
             poster="/assets/book-poster.jpg"
+            autoPlay
             muted
             playsInline
             preload="auto"
