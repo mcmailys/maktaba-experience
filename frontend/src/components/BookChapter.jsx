@@ -17,13 +17,6 @@ export default function BookChapter() {
   const [isTouch] = useState(
     () => window.matchMedia("(pointer: coarse)").matches
   );
-  const [hasAlpha] = useState(() => {
-    const isSafari = /^((?!chrome|chromium|android).)*safari/i.test(
-      navigator.userAgent
-    );
-    const probe = document.createElement("video");
-    return !isSafari && probe.canPlayType('video/webm; codecs="vp9"') !== "";
-  });
 
   useEffect(() => {
     const video = videoRef.current;
@@ -76,19 +69,18 @@ export default function BookChapter() {
         data-testid="book-video-scrollzone"
       >
         <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-          {hasAlpha && (
-            <div className="absolute inset-0" aria-hidden data-testid="book-bg-image">
-              <img
-                src="/assets/library-bg.jpg"
-                alt=""
-                className="w-full h-full object-cover opacity-30"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/55 to-[#0B0C10]" />
-            </div>
-          )}
+          <div className="absolute inset-0" aria-hidden data-testid="book-bg-image">
+            <img
+              src="/assets/library-bg.jpg"
+              alt=""
+              className="w-full h-full object-cover opacity-30"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/55 to-[#0B0C10]" />
+          </div>
           <video
             ref={videoRef}
             poster="/assets/book-poster.jpg"
+            autoPlay
             muted
             playsInline
             preload="auto"
