@@ -31,6 +31,11 @@ L'utilisateur a rejeté la V1 et fourni 5 mockups mobiles. Direction adoptée : 
 ## Vérifié
 - Screenshots e2e V2 : hero, timeline + skyline, carte, livre, extrait (page 2/5 tournée), formulaire de commande
 - Backend : POST/GET /api/orders OK (3 commandes de test en base)
+- V3 (19/08/2026) : zoom carte vérifié en 4 phases (départ → Syrie → Damas → anneau+label+légende), anneau ancré exactement sur la lueur de Damas (60.3%, 67.4% de l'image) ; défilement automatique de la timeline confirmé (transform en mouvement mesuré)
+
+## Itération 3 (19/08/2026) — animations demandées par l'utilisateur
+- Carte : section sticky (340vh) avec zoom scroll-driven monde → Syrie → Damas (scale 1→2.9 ancré sur Damas), titre qui s'efface, anneau pulsant + label « DAMAS — SYRIE 33.51°N, 36.27°E » puis légende finale qui apparaissent au scroll
+- Timeline : devenue horizontale à défilement automatique infini (CSS, pause au survol), points dorés lumineux, skyline de Damas conservée
 
 ## Backlog priorisé
 - P0 : (aucun bloquant)

@@ -109,6 +109,21 @@ html.lenis body {
     to { transform: translateX(-50%); }
 }
 
+/* Horizontal auto-scrolling timeline */
+.timeline-track {
+    display: flex;
+    width: max-content;
+    animation: timeline-scroll 42s linear infinite;
+}
+.timeline-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes timeline-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
 /* Thin archival scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
