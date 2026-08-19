@@ -2,23 +2,23 @@ export const authors = [
   {
     id: "ibn-qayyim",
     slug: "ibn-qayyim-al-jawziyya",
-    nameLatin: "Ibn Qayyim al-Jawziyya",
+    displayName: "Ibn al-Qayyim",
+    fullName: "Muhammad ibn Abī Bakr ibn Ayūb",
     nameArabic: "ابن قيم الجوزية",
-    fullName: "Shams al-Dīn Muḥammad ibn Abī Bakr",
+    gregorian: "1292 — 1350",
     hijri: "691 – 751 H",
-    gregorian: "1292 – 1350",
     city: "Damas",
-    country: "Syrie",
-    coords: [36.2765, 33.5138],
-    portraitCutout: "/assets/portrait-cutout.png",
-    portraitFull: "/assets/portrait-full.png",
+    heroPortrait: "/assets/hero-portrait.jpg",
     book: {
+      title: "Meditations",
       titleArabic: "الفوائد",
-      titleLatin: "Al-Fawā'id",
-      titleFrench: "Les Méditations",
-      image: "/assets/book.png",
-      publisher: "Éditions Tawbah",
+      image: "/assets/book-standing.jpg",
+      langue: "Arabe",
+      edition: "Dar At-Tawbah",
+      pages: "~ 600",
       price: "24,90 €",
+      description:
+        "Un chef-d'œuvre de la spiritualité islamique, un guide intemporel vers la connaissance de soi et d'Allah.",
     },
   },
 ];
@@ -27,63 +27,51 @@ export const author = authors[0];
 
 export const timelineEvents = [
   {
-    hijri: "691 H",
     year: "1292",
-    title: "Naissance à Damas",
-    text: "Le 7 Ṣafar, au cœur de la vieille ville. Son père veille sur la madrasa al-Jawziyya — « la petite école » dont le fils héritera le nom.",
+    text: "Naissance à Damas, au cœur des terres du Shâm. Son père veille sur la madrasa al-Jawziyya, dont il héritera le nom.",
   },
   {
-    hijri: "712 H",
     year: "1313",
-    title: "La rencontre",
-    text: "À vingt et un ans, il se lie à Shaykh al-Islām Ibn Taymiyya. Il devient son plus proche disciple : scribe de ses cours, témoin de ses combats.",
+    text: "Devient le disciple de Shaykh al-Islām Ibn Taymiyya, qu'il ne quittera presque plus.",
   },
   {
-    hijri: "726 H",
-    year: "1326",
-    title: "La citadelle",
-    text: "Emprisonné avec son maître dans la citadelle de Damas. Derrière les murs, il fait de la cellule une école : mémorisation, écriture, prière.",
-  },
-  {
-    hijri: "728 H",
     year: "1328",
-    title: "L'héritage",
-    text: "Ibn Taymiyya meurt. Libéré, Ibn al-Qayyim enseigne à la Jawziyya et dicte ses œuvres dans les cercles de savoir de Damas.",
+    text: "Libéré de la citadelle, il commence à enseigner et à écrire ses premières œuvres majeures.",
   },
   {
-    hijri: "751 H",
+    year: "1332",
+    text: "Devient une référence dans la spiritualité et la réforme intérieure.",
+  },
+  {
     year: "1350",
-    title: "Le retour",
-    text: "Il rend l'âme un soir de Rajab, à cinquante-huit ans. On prie sur lui à la mosquée des Omeyyades ; on l'enterre près de son maître.",
+    text: "Décès à Damas. Son héritage continue d'éclairer les cœurs.",
   },
 ];
 
 export const excerptPages = [
   {
-    type: "cover",
-    arabic: "الفوائد",
-    title: "Les Méditations",
-    author: "Ibn Qayyim al-Jawziyya",
-    note: "Extraits — Éditions Tawbah",
+    image: "/assets/page-1.jpg",
+    quote:
+      "En vérité, il y a dans le cœur une désolation que rien ne peut dissiper sinon la compagnie d'Allah ; une solitude que rien ne peut rompre sinon l'isolement avec Lui ; un vide que rien ne comble, sinon Son amour et le rappel constant de Lui.",
   },
   {
-    type: "quote",
-    text: "En vérité, il y a dans le cœur une désolation que rien ne peut dissiper sinon la compagnie d'Allah ; une solitude que rien ne peut rompre sinon l'isolement avec Lui ; une tristesse que rien ne peut écarter sinon la joie de Le connaître. Et il y a en lui un vide que rien ne comble, sinon Son amour, le retour vers Lui et le rappel constant de Lui.",
-    source: "Al-Fawā'id — traduction française libre",
+    image: "/assets/page-2.jpg",
+    quote:
+      "Les actions des cœurs sont la racine ; les actions des membres ne sont que leurs branches et leurs fruits. Le cœur est le roi et les membres sont ses soldats : s'il est sain, ils sont sains ; s'il est corrompu, ils se corrompent.",
   },
   {
-    type: "quote",
-    text: "Les actions des cœurs sont la racine ; les actions des membres ne sont que leurs branches et leurs fruits. Le cœur est le roi et les membres sont ses soldats : s'il est sain, ils sont sains ; s'il est corrompu, ils se corrompent.",
-    source: "Al-Fawā'id — traduction française libre",
+    image: "/assets/page-3.jpg",
+    quote:
+      "Ce bas-monde est un pont : traverse-le, et ne t'y installe pas. Regarde comme les heures te font franchir les étapes, une à une, jusqu'à ce que le voyage s'achève.",
   },
   {
-    type: "quote",
-    text: "Ce bas-monde est un pont : traverse-le, et ne t'y installe pas. Regarde comme les heures te font franchir les étapes, une à une, jusqu'à ce que le voyage s'achève. Chaque souffle est un pas vers le terme.",
-    source: "Al-Fawā'id — traduction française libre",
+    image: "/assets/page-4.jpg",
+    quote:
+      "Le savoir n'est pas ce qui est rapporté ; le savoir est une lumière qu'Allah dépose dans le cœur.",
   },
   {
-    type: "end",
-    quote: "Le savoir n'est pas ce qui est rapporté ; le savoir est une lumière qu'Allah dépose dans le cœur.",
-    note: "Fin de l'extrait. L'ouvrage complet rassemble des centaines de méditations dictées au fil des jours.",
+    image: "/assets/page-5.jpg",
+    quote:
+      "La patience est la moitié de la foi, et la gratitude en est l'autre moitié. Qui perd la patience a perdu sa part de la foi.",
   },
 ];

@@ -1,38 +1,38 @@
 # PRD — Mīrāth · Archives vivantes (librairie islamique storytelling)
 
 ## Problème initial (verbatim)
-« jveux révolutionner les librairies islamiques en ligne. On va apporter un angle story telling. Theme sombre. On voit l'auteur avec des animations et apparition au scroll. J'aime bcp le site mounis.app. tu peux t'inspirer du thème. Style archives, historique. On voit l'auteur apparaitre genre Ibn al-Qayyim al-Jawziyya (photo détourée). Ensuite on scroll : animation avec une carte du monde qui apparait et un point là où le livre a été écrit. Une timeline qui apparait au scroll avec la période où il a vécu : 1292–1350. Et son lieu sur la carte : un point animé à Damas en Syrie. Au scroll le livre apparait et bouge. On peut consulter quelques pages. »
+« jveux révolutionner les librairies islamiques en ligne. On va apporter un angle story telling. Theme sombre. On voit l'auteur avec des animations et apparition au scroll. J'aime bcp le site mounis.app. tu peux t'inspirer du thème. Style archives, historique. On voit l'auteur apparaitre genre Ibn al-Qayyim al-Jawziyya. ensuite on scroll ya une animation avec une carte du monde qui apparait et un point là ou le livre a été écrit. uen limeline qui apparait au scroll avec la période ou il a vecu Période de vie : 1292–1350. Et son lieu sur la carte un point animé à Damas en Syrie. au scroll le livre apparait est bouge. On peut consulter quelques pages »
+
+## Itération 2 (19/08/2026) — mockups mobiles fournis par l'utilisateur
+L'utilisateur a rejeté la V1 et fourni 5 mockups mobiles. Direction adoptée : clair-obscur type peinture à l'huile, colonne centrée éditoriale, visuels issus des mockups (portrait de profil, carte antique avec lignes lumineuses et loupe sur Damas, livre debout, skyline de Damas, pages de manuscrit calligraphié).
 
 ## Choix utilisateur
-- Page immersive unique dédiée à Ibn al-Qayyim et « Les Méditations » (Al-Fawā'id, éditions Tawbah)
-- Extraits réels en français (traduction libre) — quelques feuillets consultables
+- Page immersive unique dédiée à Ibn al-Qayyim et « Les Méditations »
+- Extraits en français (traduction libre) — feuilletage 5 pages
 - Bouton « Commander » → formulaire de commande (sans paiement en ligne)
-- Uniquement Ibn al-Qayyim, mais structure de données multi-auteurs (src/data/content.js : tableau `authors`)
+- Structure de données multi-auteurs (src/data/content.js : tableau `authors`)
 
 ## Architecture
-- Frontend : React 19 + Tailwind + framer-motion (scroll reveals, parallax, page-turn) + lenis (momentum scroll) + react-simple-maps (carte du monde, topojson local /public/world-110m.json)
+- Frontend : React 19 + Tailwind + framer-motion + lenis (momentum scroll)
 - Backend : FastAPI + MongoDB (motor) — POST/GET /api/orders
-- Design : dark #0B0C10, or #D4AF37, crème #F2EBE5 ; Cormorant Garamond / Amiri / Manrope / IBM Plex Mono ; grain overlay ; guidelines dans /app/design_guidelines.json
+- Assets : visuels extraits des mockups utilisateur (public/assets/) + crops d'un manuscrit ancien (pages d'extrait)
+- Design : dark #0B0C10, or #D4AF37, crème #F2EBE5 ; Cormorant Garamond / Amiri / Manrope / IBM Plex Mono ; grain overlay
 
-## Personas
-- Amateur de patrimoine islamique francophone cherchant une expérience d'achat émotionnelle
-- Libraire/éditeur voulant valoriser chaque ouvrage par son histoire
-
-## Implémenté (19/08/2026)
-- Hero cinétique : révélation ligne par ligne masquée, portrait détouré en parallax, calligraphie d'arrière-plan, spotlight or
-- Marquee éditorial lent (75s)
-- Chapitre 01 L'Homme : portrait encadré, bio, stats (58 ans / +60 ouvrages / 16 ans avec Ibn Taymiyya)
-- Chapitre 02 Le Lieu : carte du monde Mercator, point or pulsant sur Damas (33.51°N, 36.27°E), cartouche d'archive
-- Chapitre 03 Chronologie : timeline verticale dessinée au scroll, 5 événements 1292→1350 (dates H + JC)
-- Chapitre 04 Le Livre : livre flottant piloté au scroll (rotation/translation), prix 24,90 €, lecteur d'extraits (5 feuillets, page-turn animé, navigation points/flèches, fermeture Échap)
-- Chapitre 05 Commande : formulaire (nom, email, quantité, note) → POST /api/orders → reçu Nº + toast
-- Commandes persistées en MongoDB (collection `orders`)
+## Implémenté
+- V2 (19/08/2026) — refonte complète selon mockups :
+  - Hero : portrait huile de profil, titre « IBN AL-QAYYIM » révélé ligne par ligne, nom complet, 1292—1350, texte vertical latéral, bouton circulaire « Scrollez pour explorer »
+  - 01 Son Histoire : timeline verticale dorée à points lumineux (1292 → 1350, textes des mockups), skyline de Damas en bas de section
+  - 02 Son Lieu : « Damas, au cœur des terres du Shâm », carte antique avec routes lumineuses et loupe circulaire sur Damas (visuel du mockup), reveal au scroll
+  - 03 Son Œuvre : livre debout flottant (parallax), « MEDITATIONS », méta Langue/Édition/Pages (Arabe, Dar At-Tawbah, ~600), CTA « Découvrir l'extrait »
+  - 04 Lire un extrait : « Feuilletez quelques pages », pages de manuscrit calligraphié avec flèches latérales, indicateur x/5, citation française par page, note « Accès limité à l'extrait — Débloquez le livre complet »
+  - 05 Recevoir l'ouvrage : récapitulatif + formulaire de commande → POST /api/orders → reçu Nº + toast
+- V1 (19/08/2026) : première version (remplacée par V2)
 
 ## Vérifié
-- curl POST/GET /api/orders OK (commande e2e « Moussa Diallo » persistée)
-- Screenshots e2e : hero, chapitres 01–04, lecteur (ouverture, page suivante), commande soumise avec succès
+- Screenshots e2e V2 : hero, timeline + skyline, carte, livre, extrait (page 2/5 tournée), formulaire de commande
+- Backend : POST/GET /api/orders OK (3 commandes de test en base)
 
 ## Backlog priorisé
 - P0 : (aucun bloquant)
-- P1 : notification email au libraire à chaque commande (Resend) ; page admin listant les commandes
-- P2 : multi-auteurs (routing /auteurs/[slug], la structure data est prête) ; audio des extraits (TTS) ; version arabe/anglaise ; vraies photos des pages du livre
+- P1 : notification email au libraire à chaque commande (Resend) ; page admin des commandes
+- P2 : multi-auteurs (routing /[slug], structure prête) ; versions HD des visuels (fournies par l'utilisateur ou régénérées) ; audio des extraits ; version arabe/anglaise

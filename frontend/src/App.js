@@ -3,11 +3,10 @@ import Lenis from "lenis";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import Marquee from "./components/Marquee";
-import AuthorChapter from "./components/AuthorChapter";
-import MapChapter from "./components/MapChapter";
 import TimelineChapter from "./components/TimelineChapter";
+import MapChapter from "./components/MapChapter";
 import BookChapter from "./components/BookChapter";
+import ExcerptSection from "./components/ExcerptSection";
 import OrderSection from "./components/OrderSection";
 import Footer from "./components/Footer";
 
@@ -36,11 +35,10 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <Marquee />
-        <AuthorChapter />
-        <MapChapter />
         <TimelineChapter />
+        <MapChapter />
         <BookChapter />
+        <ExcerptSection />
         <OrderSection />
       </main>
       <Footer />
