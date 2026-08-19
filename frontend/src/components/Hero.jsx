@@ -21,8 +21,20 @@ export default function Hero() {
   return (
     <section
       data-testid="hero-section"
-      className="relative min-h-screen flex flex-col justify-end overflow-hidden"
+      className="relative min-h-[85vh] flex flex-col justify-end overflow-hidden"
     >
+      <motion.p
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.16 }}
+        transition={{ delay: 1.2, duration: 2, ease: EASE }}
+        className="absolute inset-x-0 top-[9%] text-center font-arabic leading-none text-[#D4AF37] select-none pointer-events-none whitespace-nowrap z-10"
+        style={{ fontSize: "clamp(4.5rem, 16vw, 17rem)" }}
+        data-testid="hero-arabic-overlay"
+      >
+        {author.nameArabic}
+      </motion.p>
+
       <div className="absolute inset-x-0 top-0 h-[68%]">
         <motion.img
           initial={{ opacity: 0, scale: 1.06 }}
@@ -45,19 +57,7 @@ export default function Hero() {
         Explorer le savoir, transmettre la lumière.
       </p>
 
-      <motion.p
-        aria-hidden
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.09 }}
-        transition={{ delay: 1.4, duration: 2, ease: EASE }}
-        className="absolute inset-x-0 bottom-[14%] text-center font-arabic leading-none text-[#D4AF37] select-none pointer-events-none whitespace-nowrap"
-        style={{ fontSize: "clamp(4.5rem, 16vw, 17rem)" }}
-        data-testid="hero-arabic-overlay"
-      >
-        {author.nameArabic}
-      </motion.p>
-
-      <div className="relative z-10 px-6 pb-12 text-center">
+      <div className="relative z-10 px-6 pb-20 text-center">
         <h1
           data-testid="hero-title"
           className="font-display font-medium uppercase leading-[1.04] tracking-[0.04em] text-[#F2EBE5]"
