@@ -43,7 +43,8 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 - La Syrie s'illumine progressivement en or (fill + stroke + drop-shadow interpolés par le scroll)
 - Marqueur Damas : point sombre cerclé de crème, anneaux pulsants, label « DAMAS / SYRIE — 33.51°N, 36.27°E » avec contour sombre (lisible sur l'or)
 - Readout digital en bas à gauche : « ZOOM ×n — lat° N, lon° E » mis à jour en direct
-- Vérifié en captures à 3 profondeurs (monde, Syrie illuminée ×7.4, Damas ×8.5)
+- Routes dorées animées (ajout 19/08/2026) : arcs courbes Damas → Istanbul, Le Caire, Bagdad qui se dessinent (stroke-dashoffset) en cascade pendant le zoom (~×5-7), points lumineux + labels des villes en fondu différé ; rejoués à chaque passage
+- Vérifié en captures à 3 profondeurs (monde, Syrie illuminée ×7.4, Damas ×8.5) + captures routes (dessin ×7.6 et final ×8.5)
 
 ## Backlog priorisé
 - P0 : (aucun bloquant)

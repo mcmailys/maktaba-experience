@@ -13,6 +13,7 @@ import {
   Graticule,
   Sphere,
   Marker,
+  Line,
   ZoomableGroup,
 } from "react-simple-maps";
 
@@ -25,6 +26,29 @@ function lerpColor(a, b, t) {
   return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(",")})`;
 }
 
+function arcCoords(from, to, lift = 0.16, steps = 26) {
+  const [x1, y1] = from;
+  const [x2, y2] = to;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const dist = Math.hypot(dx, dy);
+  const px = -dy / dist;
+  const py = dx / dist;
+  const pts = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = i / steps;
+    const m = Math.sin(Math.PI * t) * dist * lift;
+    pts.push([x1 + dx * t + px * m, y1 + dy * t + py * m]);
+  }
+  return pts;
+}
+
+const ROUTES = [
+  { name: "ISTANBUL", to: [28.9784, 41.0082] },
+  { name: "LE CAIRE", to: [31.2357, 30.0444] },
+  { name: "BAGDAD", to: [44.3661, 33.3152] },
+].map((r) => ({ ...r, coords: arcCoords(DAMASCUS, r.to) }));
+
 export default function MapChapter() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -36,7 +60,8 @@ export default function MapChapter() {
   const lonRaw = useTransform(scrollYProgress, [0.05, 0.85], [12, DAMASCUS[0]]);
   const latRaw = useTransform(scrollYProgress, [0.05, 0.85], [32, DAMASCUS[1]]);
   const glowRaw = useTransform(scrollYProgress, [0.45, 0.7], [0, 1]);
-  const markerRaw = useTransform(scrollYProgress, [0.68, 0.82], [0, 1]);
+  const routesRaw = useTransform(scrollYProgress, [0.58, 0.68], [0, 1]);
+  const markerRaw = useTransform(scrollYProgress, [0.72, 0.84], [0, 1]);
 
   const zoomSpring = useSpring(zoomRaw, SPRING);
   const lonSpring = useSpring(lonRaw, SPRING);
@@ -45,6 +70,7 @@ export default function MapChapter() {
   const [zoom, setZoom] = useState(1);
   const [center, setCenter] = useState([12, 32]);
   const [glow, setGlow] = useState(0);
+  const [routesVisible, setRoutesVisible] = useState(false);
   const [markerOn, setMarkerOn] = useState(0);
 
   useMotionValueEvent(zoomSpring, "change", setZoom);
@@ -55,6 +81,7 @@ export default function MapChapter() {
     setCenter([lonSpring.get(), latSpring.get()])
   );
   useMotionValueEvent(glowRaw, "change", setGlow);
+  useMotionValueEvent(routesRaw, "change", (v) => setRoutesVisible(v > 0.5));
   useMotionValueEvent(markerRaw, "change", setMarkerOn);
 
   const titleOpacity = useTransform(scrollYProgress, [0, 0.16, 0.3], [1, 1, 0]);
@@ -132,6 +159,55 @@ export default function MapChapter() {
                     })
                   }
                 </Geographies>
+
+                <g className={routesVisible ? "routes-visible" : ""} data-testid="golden-routes">
+                  {ROUTES.map((route, i) => (
+                    <Line
+                      key={route.name}
+                      coordinates={route.coords}
+                      fill="none"
+                      stroke="#D4AF37"
+                      strokeWidth={1.1 / zoom}
+                      className="route-line"
+                      data-testid={`route-${route.name.toLowerCase().replace(" ", "-")}`}
+                      style={{
+                        animationDelay: `${i * 0.45}s`,
+                        filter: "drop-shadow(0 0 3px rgba(212,175,55,0.6))",
+                      }}
+                    />
+                  ))}
+                  {ROUTES.map((route, i) => (
+                    <Marker key={route.name} coordinates={route.to}>
+                      <circle
+                        r={2.2 / zoom}
+                        fill="#D4AF37"
+                        className="route-end"
+                        style={{
+                          transitionDelay: `${1.4 + i * 0.45}s`,
+                          filter: "drop-shadow(0 0 4px rgba(212,175,55,0.8))",
+                        }}
+                      />
+                      <text
+                        textAnchor="middle"
+                        y={-6 / zoom}
+                        className="route-label"
+                        style={{
+                          transitionDelay: `${1.8 + i * 0.45}s`,
+                          fontFamily: "IBM Plex Mono, monospace",
+                          fontSize: 6 / zoom,
+                          letterSpacing: "0.25em",
+                          fill: "#F2EBE5",
+                          paintOrder: "stroke",
+                          stroke: "#0B0C10",
+                          strokeWidth: 2.5 / zoom,
+                        }}
+                      >
+                        {route.name}
+                      </text>
+                    </Marker>
+                  ))}
+                </g>
+
                 {markerOn > 0.02 && (
                   <Marker coordinates={DAMASCUS}>
                     <motion.circle

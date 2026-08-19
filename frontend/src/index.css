@@ -124,6 +124,27 @@ html.lenis body {
     to { transform: translateX(-50%); }
 }
 
+/* Animated golden routes on the vector map */
+.route-line {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+}
+.routes-visible .route-line {
+    animation: route-draw 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes route-draw {
+    to { stroke-dashoffset: 0; }
+}
+.route-end,
+.route-label {
+    opacity: 0;
+    transition: opacity 0.7s ease;
+}
+.routes-visible .route-end,
+.routes-visible .route-label {
+    opacity: 1;
+}
+
 /* Thin archival scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
