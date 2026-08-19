@@ -88,9 +88,6 @@ export default function Hero() {
           >
             <ChevronDown className="h-4 w-4" />
           </motion.a>
-          <span className="font-mono-archive text-[10px] tracking-[0.35em] uppercase text-[#A39E93]">
-            Scrollez pour explorer
-          </span>
         </motion.div>
       </div>
     </section>

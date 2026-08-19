@@ -16,6 +16,12 @@ export default function Header() {
             MĪRĀTH
           </span>
         </a>
+        <span
+          className="font-arabic text-lg sm:text-xl text-[#D4AF37] leading-none"
+          data-testid="header-author-arabic"
+        >
+          ابن قيم الجوزية
+        </span>
         <a
           href="#commande"
           data-testid="header-order-button"

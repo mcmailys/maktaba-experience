@@ -32,11 +32,11 @@ export default function MapChapter() {
     offset: ["start start", "end end"],
   });
 
-  const zoomRaw = useTransform(scrollYProgress, [0.05, 0.85], [1, 8.5]);
-  const lonRaw = useTransform(scrollYProgress, [0.05, 0.85], [12, DAMASCUS[0]]);
-  const latRaw = useTransform(scrollYProgress, [0.05, 0.85], [32, DAMASCUS[1]]);
-  const glowRaw = useTransform(scrollYProgress, [0.45, 0.7], [0, 1]);
-  const markerRaw = useTransform(scrollYProgress, [0.72, 0.84], [0, 1]);
+  const zoomRaw = useTransform(scrollYProgress, [0.08, 0.8], [1, 8.5]);
+  const lonRaw = useTransform(scrollYProgress, [0.08, 0.8], [12, DAMASCUS[0]]);
+  const latRaw = useTransform(scrollYProgress, [0.08, 0.8], [32, DAMASCUS[1]]);
+  const glowRaw = useTransform(scrollYProgress, [0.42, 0.62], [0, 1]);
+  const markerRaw = useTransform(scrollYProgress, [0.62, 0.76], [0, 1]);
 
   const zoomSpring = useSpring(zoomRaw, SPRING);
   const lonSpring = useSpring(lonRaw, SPRING);
@@ -57,10 +57,10 @@ export default function MapChapter() {
   useMotionValueEvent(glowRaw, "change", setGlow);
   useMotionValueEvent(markerRaw, "change", setMarkerOn);
 
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.16, 0.3], [1, 1, 0]);
-  const titleY = useTransform(scrollYProgress, [0, 0.3], [0, -60]);
-  const captionOpacity = useTransform(scrollYProgress, [0.82, 0.94], [0, 1]);
-  const captionY = useTransform(scrollYProgress, [0.82, 0.96], [30, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.14, 0.26], [1, 1, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 0.26], [0, -60]);
+  const captionOpacity = useTransform(scrollYProgress, [0.8, 0.92], [0, 1]);
+  const captionY = useTransform(scrollYProgress, [0.8, 0.94], [30, 0]);
 
   const syriaFill = lerpColor("#16181D", "#D4AF37", glow);
   const syriaStroke = lerpColor("#2A2D34", "#F2D06B", glow);
@@ -71,7 +71,7 @@ export default function MapChapter() {
       data-testid="map-chapter"
       ref={ref}
       className="relative"
-      style={{ height: "340vh" }}
+      style={{ height: "220vh" }}
     >
       <div className="sticky top-0 h-screen overflow-hidden">
         <div
@@ -149,30 +149,25 @@ export default function MapChapter() {
                   <g opacity={markerOn} data-testid="damascus-label">
                     <text
                       textAnchor="middle"
-                      y={-16 / zoom}
+                      y={-14 / zoom}
                       style={{
                         fontFamily: "IBM Plex Mono, monospace",
-                        fontSize: 11 / zoom,
+                        fontSize: 17 / zoom,
                         letterSpacing: "0.3em",
-                        fill: "#F2EBE5",
-                        paintOrder: "stroke",
-                        stroke: "#0B0C10",
-                        strokeWidth: 3.5 / zoom,
+                        fill: "#0B0C10",
+                        fontWeight: 500,
                       }}
                     >
                       DAMAS
                     </text>
                     <text
                       textAnchor="middle"
-                      y={-7 / zoom}
+                      y={-4 / zoom}
                       style={{
                         fontFamily: "IBM Plex Mono, monospace",
-                        fontSize: 6.5 / zoom,
+                        fontSize: 8 / zoom,
                         letterSpacing: "0.2em",
-                        fill: "rgba(242,235,229,0.9)",
-                        paintOrder: "stroke",
-                        stroke: "#0B0C10",
-                        strokeWidth: 3 / zoom,
+                        fill: "rgba(11,12,16,0.75)",
                       }}
                     >
                       SYRIE — 33.51° N, 36.27° E

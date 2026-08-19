@@ -5,45 +5,48 @@ import { timelineEvents } from "../data/content";
 export default function TimelineChapter() {
   const items = [...timelineEvents, ...timelineEvents];
   return (
-    <section id="histoire" data-testid="timeline-chapter" className="relative pt-32 overflow-hidden">
-      <div className="mx-auto max-w-xl px-6">
-        <SectionHeading number="01" title="Son Histoire" />
-      </div>
-
-      <Reveal data-testid="timeline-track-wrapper">
-        <div className="timeline-track" data-testid="timeline-track">
-          {items.map((event, i) => (
-            <div
-              key={`${event.year}-${i}`}
-              className="relative w-[300px] sm:w-[340px] shrink-0 pr-16 pt-12"
-              data-testid={i < timelineEvents.length ? `timeline-event-${event.year}` : undefined}
-            >
-              <span
-                className="absolute top-0 left-0 right-16 h-px bg-gradient-to-r from-[#D4AF37]/60 to-[#D4AF37]/10"
-                aria-hidden
-              />
-              <span
-                className="absolute -top-[9px] left-0 h-[19px] w-[19px] rounded-full border border-[#D4AF37]/70 bg-[#231E0E]"
-                aria-hidden
-              >
-                <span className="absolute inset-[5px] rounded-full bg-[#D4AF37] shadow-[0_0_16px_5px_rgba(212,175,55,0.5)]" />
-              </span>
-              <p className="font-display text-4xl sm:text-5xl text-[#D4AF37]">{event.year}</p>
-              <p className="mt-4 text-sm font-light leading-relaxed text-[#A39E93]">
-                {event.text}
-              </p>
-            </div>
-          ))}
-        </div>
-      </Reveal>
-
-      <div className="relative mt-28" data-testid="timeline-skyline">
+    <section id="histoire" data-testid="timeline-chapter" className="relative py-32 overflow-hidden">
+      <div className="absolute inset-0" aria-hidden>
         <img
           src="/assets/skyline-damas.jpg"
-          alt="Silhouette de Damas au crépuscule — dômes et minarets"
-          className="w-full h-[280px] sm:h-[380px] object-cover object-bottom opacity-90"
+          alt=""
+          data-testid="timeline-skyline"
+          className="w-full h-full object-cover object-bottom opacity-30"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/20 to-[#0B0C10]/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/65 to-[#0B0C10]" />
+      </div>
+
+      <div className="relative z-10">
+        <div className="mx-auto max-w-xl px-6">
+          <SectionHeading number="01" title="Son Histoire" />
+        </div>
+
+        <Reveal data-testid="timeline-track-wrapper">
+          <div className="timeline-track" data-testid="timeline-track">
+            {items.map((event, i) => (
+              <div
+                key={`${event.year}-${i}`}
+                className="relative w-[300px] sm:w-[340px] shrink-0 pr-16 pt-12"
+                data-testid={i < timelineEvents.length ? `timeline-event-${event.year}` : undefined}
+              >
+                <span
+                  className="absolute top-0 left-0 right-16 h-px bg-gradient-to-r from-[#D4AF37]/60 to-[#D4AF37]/10"
+                  aria-hidden
+                />
+                <span
+                  className="absolute -top-[9px] left-0 h-[19px] w-[19px] rounded-full border border-[#D4AF37]/70 bg-[#231E0E]"
+                  aria-hidden
+                >
+                  <span className="absolute inset-[5px] rounded-full bg-[#D4AF37] shadow-[0_0_16px_5px_rgba(212,175,55,0.5)]" />
+                </span>
+                <p className="font-display text-4xl sm:text-5xl text-[#D4AF37]">{event.year}</p>
+                <p className="mt-4 text-sm font-light leading-relaxed text-[#A39E93]">
+                  {event.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
