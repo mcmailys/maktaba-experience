@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useAnimationControls,
+} from "framer-motion";
 import { ChevronLeft, ChevronRight, Lock } from "lucide-react";
 import Reveal, { EASE } from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -7,8 +11,38 @@ import { excerptPages } from "../data/content";
 
 export default function ExcerptSection() {
   const [page, setPage] = useState(0);
+  const [flipTarget, setFlipTarget] = useState(null);
+  const sheetControls = useAnimationControls();
+  const shadeControls = useAnimationControls();
+
   const total = excerptPages.length;
   const current = excerptPages[page];
+  const base = flipTarget !== null ? excerptPages[flipTarget] : current;
+
+  const turnTo = (target) => {
+    if (flipTarget !== null || target === page) return;
+    setFlipTarget(target);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        shadeControls.set({ opacity: 0 });
+        sheetControls.set({ rotateY: 0 });
+        shadeControls.start({
+          opacity: [0, 0.55, 0],
+          transition: { duration: 0.95, times: [0, 0.5, 1], ease: "easeInOut" },
+        });
+        sheetControls
+          .start({
+            rotateY: -180,
+            transition: { duration: 0.95, ease: [0.45, 0, 0.2, 1] },
+          })
+          .then(() => {
+            setPage(target);
+            setFlipTarget(null);
+            sheetControls.set({ rotateY: 0 });
+          });
+      });
+    });
+  };
 
   return (
     <section id="extrait" data-testid="excerpt-section" className="relative pt-16 pb-32">
@@ -30,27 +64,58 @@ export default function ExcerptSection() {
 
         <Reveal delay={0.15} className="relative mt-8">
           <div
-            className="relative overflow-hidden border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.8)]"
+            className="relative border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.8)]"
+            style={{ perspective: "1800px" }}
             data-lenis-prevent
           >
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={page}
-                src={current.image}
-                alt={`Page ${page + 1} du manuscrit — calligraphie ancienne`}
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.5, ease: EASE }}
-                className="w-full aspect-[3/4] object-cover"
-                data-testid="excerpt-image"
-              />
-            </AnimatePresence>
+            <img
+              src={base.image}
+              alt={`Page ${base === current ? page + 1 : flipTarget + 1} du manuscrit — calligraphie ancienne`}
+              className="w-full aspect-[3/4] object-cover"
+              data-testid="excerpt-image"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/60 to-transparent pointer-events-none" aria-hidden />
+
+            {flipTarget !== null && (
+              <motion.div
+                animate={sheetControls}
+                initial={{ rotateY: 0 }}
+                className="absolute inset-0 origin-left"
+                style={{ transformStyle: "preserve-3d" }}
+                data-testid="page-flip-sheet"
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{ backfaceVisibility: "hidden" }}
+                >
+                  <img
+                    src={current.image}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                  <motion.div
+                    animate={shadeControls}
+                    initial={{ opacity: 0 }}
+                    className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/25 to-transparent"
+                  />
+                </div>
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                    background:
+                      "linear-gradient(to right, #241d10, #171208 60%, #100d06)",
+                  }}
+                />
+              </motion.div>
+            )}
           </div>
+
           <button
-            onClick={() => setPage((p) => Math.max(0, p - 1))}
-            disabled={page === 0}
+            onClick={() => turnTo(Math.max(0, page - 1))}
+            disabled={page === 0 || flipTarget !== null}
             data-testid="excerpt-prev-button"
             aria-label="Page précédente"
             className="absolute -left-3 sm:-left-6 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 backdrop-blur text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-30 transition-colors duration-300"
@@ -58,8 +123,8 @@ export default function ExcerptSection() {
             <ChevronLeft className="h-5 w-5" />
           </button>
           <button
-            onClick={() => setPage((p) => Math.min(total - 1, p + 1))}
-            disabled={page === total - 1}
+            onClick={() => turnTo(Math.min(total - 1, page + 1))}
+            disabled={page === total - 1 || flipTarget !== null}
             data-testid="excerpt-next-button"
             aria-label="Page suivante"
             className="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 backdrop-blur text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-30 transition-colors duration-300"
