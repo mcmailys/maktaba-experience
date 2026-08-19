@@ -47,6 +47,12 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 - Retrait routes + plein écran (19/08/2026, demande utilisateur) : routes/villes voisines supprimées ; la carte n'est plus encadrée — elle occupe toute la largeur de l'écran (preserveAspectRatio slice) avec fondu doux en haut et en bas (mask-image), titre et légende en surimpression
 - Retouches (19/08/2026, demande utilisateur) : section carte raccourcie (340vh → 220vh, zoom plus rapide) ; label DAMAS agrandi (17/zoom) en texte sombre sans contour noir ; skyline de Damas déplacée en arrière-plan de la timeline (opacité 30% + voile) ; nom « ابن قيم الجوزية » en calligraphie arabe dorée au centre du header ; mention « Scrollez pour explorer » supprimée du hero (bouton chevron conservé)
 - Retouches 2 (19/08/2026, demande utilisateur) : skyline de la timeline plus visible (opacité 55%, voile allégé) et débordant de 10rem sous la section (overflow visible) ; flèche de scroll du hero supprimée ; hero allongé à 135vh (portrait 72% de hauteur, contenu en bas, pb-24)
+
+## Itération 5 (19/08/2026) — vidéo du livre au scroll + retouches
+- Vidéo utilisateur (rotation du livre, 7s, ProRes alpha) convertie en MP4 H.264 + WebM VP9 (fallback), fond recomposé sur #0B0C10 ; section « Son Œuvre » : zone sticky 240vh, lecture scrubée par le scroll (spring), figée sur la dernière frame (4ᵉ de couverture) ; poster = première frame
+- Prix aligné sur la 4ᵉ de couverture : 15 € ; méta corrigée : Langue Français, Édition Tawbah
+- Label DAMAS en blanc (demande utilisateur) ; hero revenu à 100vh ; titre en révélation masquée douce au chargement (refresh), nom/dates en fondu whileInView ; NB : whileInView ne se déclenche pas sur le span masqué du titre (framer-motion v11 + StrictMode) — animate au montage utilisé à la place
+- Vérifié : currentTime 0.33 → 4.13 → 6.98s (= duration − 0.08) aux 3 profondeurs ; label blanc lisible ; titre opacity 1 au chargement
 - Vérifié en captures à 3 profondeurs (monde, Syrie illuminée ×7.4, Damas ×8.5) + captures routes (dessin ×7.6 et final ×8.5) + captures plein écran (monde, Syrie ×6.8, Damas ×8.5)
 
 ## Backlog priorisé

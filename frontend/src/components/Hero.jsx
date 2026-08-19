@@ -7,9 +7,9 @@ function MaskedLine({ children, delay = 0 }) {
     <span className="block overflow-hidden">
       <motion.span
         className="block"
-        initial={{ y: "115%" }}
-        animate={{ y: "0%" }}
-        transition={{ duration: 1.15, delay, ease: EASE }}
+        initial={{ y: "115%", opacity: 0 }}
+        animate={{ y: "0%", opacity: 1 }}
+        transition={{ duration: 1.2, delay, ease: EASE }}
       >
         {children}
       </motion.span>
@@ -21,12 +21,13 @@ export default function Hero() {
   return (
     <section
       data-testid="hero-section"
-      className="relative min-h-[135vh] flex flex-col justify-end overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-end overflow-hidden"
     >
-      <div className="absolute inset-x-0 top-0 h-[72%]">
+      <div className="absolute inset-x-0 top-0 h-[68%]">
         <motion.img
           initial={{ opacity: 0, scale: 1.06 }}
-          animate={{ opacity: 1, scale: 1 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 2.2, ease: EASE }}
           src={author.heroPortrait}
           alt="Portrait à l'huile d'Ibn al-Qayyim"
@@ -44,19 +45,20 @@ export default function Hero() {
         Explorer le savoir, transmettre la lumière.
       </p>
 
-      <div className="relative z-10 px-6 pb-24 text-center">
+      <div className="relative z-10 px-6 pb-12 text-center">
         <h1
           data-testid="hero-title"
           className="font-display font-medium uppercase leading-[1.04] tracking-[0.04em] text-[#F2EBE5]"
           style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)" }}
         >
-          <MaskedLine delay={0.5}>Ibn</MaskedLine>
-          <MaskedLine delay={0.65}>al-Qayyim</MaskedLine>
+          <MaskedLine delay={0.4}>Ibn</MaskedLine>
+          <MaskedLine delay={0.55}>al-Qayyim</MaskedLine>
         </h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.05, duration: 1, ease: EASE }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ delay: 0.95, duration: 1.1, ease: EASE }}
           className="mt-7 font-mono-archive text-[10px] sm:text-xs tracking-[0.3em] uppercase text-[#A39E93]"
           data-testid="hero-fullname"
         >
@@ -64,8 +66,9 @@ export default function Hero() {
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 1, ease: EASE }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ delay: 1.1, duration: 1.1, ease: EASE }}
           className="mt-5 font-display text-2xl sm:text-3xl text-[#F2EBE5]"
           data-testid="hero-dates"
         >

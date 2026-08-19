@@ -1,5 +1,9 @@
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  useScroll,
+  useSpring,
+  useMotionValueEvent,
+} from "framer-motion";
 import { BookMarked, BookOpen, FileText, Globe } from "lucide-react";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -12,45 +16,57 @@ const meta = [
 ];
 
 export default function BookChapter() {
-  const ref = useRef(null);
+  const wrapRef = useRef(null);
+  const videoRef = useRef(null);
+
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
+    target: wrapRef,
+    offset: ["start start", "end end"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [70, -50]);
+  const smooth = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    mass: 0.5,
+  });
+
+  useMotionValueEvent(smooth, "change", (v) => {
+    const video = videoRef.current;
+    if (video && video.duration) {
+      const clamped = Math.min(Math.max(v, 0), 1);
+      video.currentTime = clamped * (video.duration - 0.08);
+    }
+  });
 
   return (
-    <section
-      id="oeuvre"
-      ref={ref}
-      data-testid="book-chapter"
-      className="relative py-32 overflow-hidden"
-    >
-      <div className="mx-auto max-w-xl px-6 text-center">
+    <section id="oeuvre" data-testid="book-chapter" className="relative pt-32">
+      <div className="mx-auto max-w-xl px-6">
         <SectionHeading number="03" title="Son Œuvre" />
+      </div>
 
-        <div className="relative flex justify-center">
+      <div ref={wrapRef} className="relative" style={{ height: "240vh" }} data-testid="book-video-scrollzone">
+        <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
           <div
             aria-hidden
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[440px] w-[440px] rounded-full"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[520px] w-[520px] rounded-full"
             style={{ background: "radial-gradient(closest-side, rgba(212,175,55,0.14), transparent)" }}
           />
-          <motion.div style={{ y }} data-testid="book-visual">
-            <motion.div
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <img
-                src={author.book.image}
-                alt="Les Méditations d'Ibn al-Qayyim — édition Dar At-Tawbah"
-                data-testid="book-cover"
-                className="w-[300px] sm:w-[360px] shadow-[0_50px_100px_rgba(0,0,0,0.85)]"
-              />
-            </motion.div>
-          </motion.div>
+          <video
+            ref={videoRef}
+            poster="/assets/book-poster.jpg"
+            muted
+            playsInline
+            preload="auto"
+            data-testid="book-video"
+            className="relative max-h-[64vh] w-auto max-w-[82vw] drop-shadow-[0_50px_100px_rgba(0,0,0,0.85)]"
+          >
+            <source src="/assets/book-rotate.mp4" type="video/mp4" />
+            <source src="/assets/book-rotate.webm" type="video/webm" />
+          </video>
         </div>
+      </div>
 
-        <Reveal className="mt-16">
+      <div className="mx-auto max-w-xl px-6 pb-32 text-center">
+        <Reveal>
           <h2
             className="font-display font-medium uppercase tracking-[0.06em] text-[#F2EBE5] text-4xl sm:text-5xl"
             data-testid="book-title"

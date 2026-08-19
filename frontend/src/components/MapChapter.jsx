@@ -154,7 +154,7 @@ export default function MapChapter() {
                         fontFamily: "IBM Plex Mono, monospace",
                         fontSize: 17 / zoom,
                         letterSpacing: "0.3em",
-                        fill: "#0B0C10",
+                        fill: "#F2EBE5",
                         fontWeight: 500,
                       }}
                     >
@@ -167,7 +167,7 @@ export default function MapChapter() {
                         fontFamily: "IBM Plex Mono, monospace",
                         fontSize: 8 / zoom,
                         letterSpacing: "0.2em",
-                        fill: "rgba(11,12,16,0.75)",
+                        fill: "rgba(242,235,229,0.85)",
                       }}
                     >
                       SYRIE — 33.51° N, 36.27° E

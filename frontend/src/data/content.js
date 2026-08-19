@@ -13,10 +13,10 @@ export const authors = [
       title: "Meditations",
       titleArabic: "الفوائد",
       image: "/assets/book-standing.jpg",
-      langue: "Arabe",
-      edition: "Dar At-Tawbah",
+      langue: "Français",
+      edition: "Tawbah",
       pages: "~ 600",
-      price: "24,90 €",
+      price: "15 €",
       description:
         "Un chef-d'œuvre de la spiritualité islamique, un guide intemporel vers la connaissance de soi et d'Allah.",
     },
