@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 import { EASE } from "./Reveal";
 import { author } from "../data/content";
 
@@ -22,9 +21,9 @@ export default function Hero() {
   return (
     <section
       data-testid="hero-section"
-      className="relative min-h-screen flex flex-col justify-end overflow-hidden"
+      className="relative min-h-[135vh] flex flex-col justify-end overflow-hidden"
     >
-      <div className="absolute inset-x-0 top-0 h-[68%]">
+      <div className="absolute inset-x-0 top-0 h-[72%]">
         <motion.img
           initial={{ opacity: 0, scale: 1.06 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -45,7 +44,7 @@ export default function Hero() {
         Explorer le savoir, transmettre la lumière.
       </p>
 
-      <div className="relative z-10 px-6 pb-12 text-center">
+      <div className="relative z-10 px-6 pb-24 text-center">
         <h1
           data-testid="hero-title"
           className="font-display font-medium uppercase leading-[1.04] tracking-[0.04em] text-[#F2EBE5]"
@@ -72,23 +71,6 @@ export default function Hero() {
         >
           {author.gregorian}
         </motion.p>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.6, duration: 1 }}
-          className="mt-14 flex flex-col items-center gap-4"
-        >
-          <motion.a
-            href="#histoire"
-            data-testid="hero-scroll-button"
-            aria-label="Scrollez pour explorer"
-            animate={{ y: [0, 7, 0] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-white/25 text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors duration-300"
-          >
-            <ChevronDown className="h-4 w-4" />
-          </motion.a>
-        </motion.div>
       </div>
     </section>
   );

@@ -5,15 +5,15 @@ import { timelineEvents } from "../data/content";
 export default function TimelineChapter() {
   const items = [...timelineEvents, ...timelineEvents];
   return (
-    <section id="histoire" data-testid="timeline-chapter" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0" aria-hidden>
+    <section id="histoire" data-testid="timeline-chapter" className="relative py-32 overflow-visible">
+      <div className="absolute inset-x-0 top-0 -bottom-40" aria-hidden>
         <img
           src="/assets/skyline-damas.jpg"
           alt=""
           data-testid="timeline-skyline"
-          className="w-full h-full object-cover object-bottom opacity-30"
+          className="w-full h-full object-cover object-bottom opacity-55"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/65 to-[#0B0C10]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/35 to-[#0B0C10]" />
       </div>
 
       <div className="relative z-10">
