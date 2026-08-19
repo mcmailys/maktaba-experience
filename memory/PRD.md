@@ -37,6 +37,14 @@ L'utilisateur a rejeté la V1 et fourni 5 mockups mobiles. Direction adoptée : 
 - Carte : section sticky (340vh) avec zoom scroll-driven monde → Syrie → Damas (scale 1→2.9 ancré sur Damas), titre qui s'efface, anneau pulsant + label « DAMAS — SYRIE 33.51°N, 36.27°E » puis légende finale qui apparaissent au scroll
 - Timeline : devenue horizontale à défilement automatique infini (CSS, pause au survol), points dorés lumineux, skyline de Damas conservée
 
+## Itération 4 (19/08/2026) — carte vectorielle digitale (refonte carte)
+L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : carte du monde VECTORIELLE (react-simple-maps + topojson local /public/world-110m.json), section sticky 340vh :
+- Zoom scroll-driven smooth (springs framer-motion) : ×1 monde → ×8.5 centré sur Damas (36.27°E, 33.51°N)
+- La Syrie s'illumine progressivement en or (fill + stroke + drop-shadow interpolés par le scroll)
+- Marqueur Damas : point sombre cerclé de crème, anneaux pulsants, label « DAMAS / SYRIE — 33.51°N, 36.27°E » avec contour sombre (lisible sur l'or)
+- Readout digital en bas à gauche : « ZOOM ×n — lat° N, lon° E » mis à jour en direct
+- Vérifié en captures à 3 profondeurs (monde, Syrie illuminée ×7.4, Damas ×8.5)
+
 ## Backlog priorisé
 - P0 : (aucun bloquant)
 - P1 : notification email au libraire à chaque commande (Resend) ; page admin des commandes
