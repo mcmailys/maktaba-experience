@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useScroll,
   useSpring,
@@ -18,14 +18,28 @@ const meta = [
 export default function BookChapter() {
   const wrapRef = useRef(null);
   const videoRef = useRef(null);
+  const [isTouch] = useState(
+    () => window.matchMedia("(pointer: coarse)").matches
+  );
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    if (isTouch) {
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) video.play().catch(() => {});
+          else video.pause();
+        },
+        { threshold: 0.25 }
+      );
+      obs.observe(video);
+      return () => obs.disconnect();
+    }
     const prime = () => video.play().then(() => video.pause()).catch(() => {});
     if (video.readyState >= 1) prime();
     else video.addEventListener("loadedmetadata", prime, { once: true });
-  }, []);
+  }, [isTouch]);
 
   const { scrollYProgress } = useScroll({
     target: wrapRef,
@@ -38,6 +52,7 @@ export default function BookChapter() {
   });
 
   useMotionValueEvent(smooth, "change", (v) => {
+    if (isTouch) return;
     const video = videoRef.current;
     if (video && video.duration) {
       const clamped = Math.min(Math.max(v, 0), 1);
@@ -56,7 +71,6 @@ export default function BookChapter() {
           <video
             ref={videoRef}
             poster="/assets/book-poster.jpg"
-            autoPlay
             muted
             playsInline
             preload="auto"
