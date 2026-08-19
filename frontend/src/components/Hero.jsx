@@ -52,7 +52,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.16 }}
             transition={{ delay: 1.2, duration: 2, ease: EASE }}
-            className="absolute inset-x-0 top-1/2 -translate-y-1/2 z-20 text-center font-arabic leading-none text-[#D4AF37] select-none pointer-events-none whitespace-nowrap"
+            className="absolute inset-x-0 top-1/2 -translate-y-[68%] z-20 text-center font-arabic leading-none text-[#D4AF37] select-none pointer-events-none whitespace-nowrap"
             style={{ fontSize: "clamp(4.5rem, 16vw, 15rem)" }}
             data-testid="hero-arabic-overlay"
           >
