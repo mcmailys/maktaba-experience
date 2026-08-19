@@ -1,9 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import { BookMarked, BookOpen, FileText, Globe } from "lucide-react";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { author } from "../data/content";
+
+const FRAME_COUNT = 101;
+const frameSrc = (i) =>
+  `/assets/frames/f_${String(i + 1).padStart(3, "0")}.webp`;
 
 const meta = [
   { icon: Globe, label: "Langue", value: author.book.langue },
@@ -13,47 +17,47 @@ const meta = [
 
 export default function BookChapter() {
   const wrapRef = useRef(null);
-  const videoRef = useRef(null);
-  const [isTouch] = useState(
-    () => window.matchMedia("(pointer: coarse)").matches
-  );
+  const canvasRef = useRef(null);
+  const imagesRef = useRef([]);
+  const targetRef = useRef(0);
+
+  const draw = (index) => {
+    const canvas = canvasRef.current;
+    const img = imagesRef.current[index];
+    if (!canvas || !img || !img.complete || !img.naturalWidth) return;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  };
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (isTouch) {
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) video.play().catch(() => {});
-          else video.pause();
-        },
-        { threshold: 0.25 }
-      );
-      obs.observe(video);
-      return () => obs.disconnect();
+    const imgs = [];
+    for (let i = 0; i < FRAME_COUNT; i++) {
+      const img = new Image();
+      img.src = frameSrc(i);
+      img.onload = () => {
+        if (i === targetRef.current) draw(i);
+      };
+      imgs.push(img);
     }
-    const prime = () => video.play().then(() => video.pause()).catch(() => {});
-    if (video.readyState >= 1) prime();
-    else video.addEventListener("loadedmetadata", prime, { once: true });
-  }, [isTouch]);
+    imagesRef.current = imgs;
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: wrapRef,
     offset: ["start start", "end end"],
   });
   const smooth = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    mass: 0.5,
+    stiffness: 140,
+    damping: 28,
+    mass: 0.4,
   });
 
   useMotionValueEvent(smooth, "change", (v) => {
-    if (isTouch) return;
-    const video = videoRef.current;
-    if (video && video.duration) {
-      const clamped = Math.min(Math.max(v, 0), 1);
-      video.currentTime = clamped * (video.duration - 0.08);
-    }
+    const clamped = Math.min(Math.max(v, 0), 0.9999);
+    const index = Math.floor(clamped * FRAME_COUNT);
+    targetRef.current = index;
+    draw(index);
   });
 
   return (
@@ -77,20 +81,13 @@ export default function BookChapter() {
             />
             <div className="absolute inset-0 bg-gradient-to-b from-[#0B0C10] via-[#0B0C10]/55 to-[#0B0C10]" />
           </div>
-          <video
-            ref={videoRef}
-            poster="/assets/book-poster.jpg"
-            autoPlay
-            muted
-            playsInline
-            preload="auto"
+          <canvas
+            ref={canvasRef}
+            width={720}
+            height={1000}
             data-testid="book-video"
             className="relative z-10 max-h-[60vh] w-auto max-w-[82vw]"
-          >
-            <source src="/assets/book-alpha.webm" type="video/webm" />
-            <source src="/assets/book-rotate.mp4" type="video/mp4" />
-            <source src="/assets/book-rotate.webm" type="video/webm" />
-          </video>
+          />
           <div
             className="absolute inset-0 z-20 overflow-hidden pointer-events-none"
             aria-hidden
