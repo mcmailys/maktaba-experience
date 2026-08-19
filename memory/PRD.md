@@ -54,6 +54,7 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 - Label DAMAS en blanc (demande utilisateur) ; hero revenu à 100vh ; titre en révélation masquée douce au chargement (refresh), nom/dates en fondu whileInView ; NB : whileInView ne se déclenche pas sur le span masqué du titre (framer-motion v11 + StrictMode) — animate au montage utilisé à la place
 - Vérifié : currentTime 0.33 → 4.13 → 6.98s (= duration − 0.08) aux 3 profondeurs ; label blanc lisible ; titre opacity 1 au chargement
 - Correctif mobile (19/08/2026) : amorçage play/pause au chargement des métadonnées (autoplay muet + playsInline) pour que le scrub fonctionne sur mobile (iOS n'exécute pas currentTime sur une vidéo jamais lue) ; halo doré derrière la vidéo supprimé (faisait ressortir le cadre) ; vérifié en viewport mobile 390×844 : currentTime 0.28 → 3.49 → 6.94s, pas de halo visible
+- Vidéo finale finish.mov (19/08/2026) : remplace la première ; encodage full-range (coin = 11,13,16 ≈ fond #0B0C10) ; effet de brume animé (5 couches CSS blur 70px, dérives 22-32s alternées) placé DEVANT la vidéo (z-20) pour fondre le cadre dans la brume ; mesures pixel : intérieur vidéo = fond page (18,17,23), fusion parfaite
 - Vérifié en captures à 3 profondeurs (monde, Syrie illuminée ×7.4, Damas ×8.5) + captures routes (dessin ×7.6 et final ×8.5) + captures plein écran (monde, Syrie ×6.8, Damas ×8.5)
 
 ## Backlog priorisé

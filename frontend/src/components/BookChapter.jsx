@@ -61,11 +61,22 @@ export default function BookChapter() {
             playsInline
             preload="auto"
             data-testid="book-video"
-            className="relative max-h-[64vh] w-auto max-w-[82vw] drop-shadow-[0_50px_100px_rgba(0,0,0,0.85)]"
+            className="relative z-10 max-h-[64vh] w-auto max-w-[82vw]"
           >
             <source src="/assets/book-rotate.mp4" type="video/mp4" />
             <source src="/assets/book-rotate.webm" type="video/webm" />
           </video>
+          <div
+            className="absolute inset-0 z-20 overflow-hidden pointer-events-none"
+            aria-hidden
+            data-testid="book-fog"
+          >
+            <div className="fog-layer fog-1" />
+            <div className="fog-layer fog-2" />
+            <div className="fog-layer fog-3" />
+            <div className="fog-layer fog-4" />
+            <div className="fog-layer fog-5" />
+          </div>
         </div>
       </div>
 
