@@ -27,7 +27,7 @@ export default function ExcerptSection() {
         shadeControls.set({ opacity: 0 });
         sheetControls.set({ rotateY: 0 });
         shadeControls.start({
-          opacity: [0, 0.55, 0],
+          opacity: [0, 0.45, 0],
           transition: { duration: 0.95, times: [0, 0.5, 1], ease: "easeInOut" },
         });
         sheetControls
@@ -64,18 +64,18 @@ export default function ExcerptSection() {
 
         <Reveal delay={0.15} className="relative mt-8">
           <div
-            className="relative border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.8)]"
+            className="relative border border-white/10 bg-[#F4EFE4] shadow-[0_40px_120px_rgba(0,0,0,0.8)]"
             style={{ perspective: "1800px" }}
             data-lenis-prevent
           >
             <img
               src={base.image}
-              alt={`Page ${base === current ? page + 1 : flipTarget + 1} du manuscrit — calligraphie ancienne`}
-              className="w-full aspect-[3/4] object-cover"
+              alt={base.caption}
+              className="w-full aspect-[3/4] object-contain"
               data-testid="excerpt-image"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
-            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/60 to-transparent pointer-events-none" aria-hidden />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10 pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/25 to-transparent pointer-events-none" aria-hidden />
 
             {flipTarget !== null && (
               <motion.div
@@ -86,18 +86,18 @@ export default function ExcerptSection() {
                 data-testid="page-flip-sheet"
               >
                 <div
-                  className="absolute inset-0"
+                  className="absolute inset-0 bg-[#F4EFE4]"
                   style={{ backfaceVisibility: "hidden" }}
                 >
                   <img
                     src={current.image}
                     alt=""
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain"
                   />
                   <motion.div
                     animate={shadeControls}
                     initial={{ opacity: 0 }}
-                    className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/25 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent"
                   />
                 </div>
                 <div
@@ -106,7 +106,7 @@ export default function ExcerptSection() {
                     backfaceVisibility: "hidden",
                     transform: "rotateY(180deg)",
                     background:
-                      "linear-gradient(to right, #241d10, #171208 60%, #100d06)",
+                      "linear-gradient(to right, #EAE1C9, #DFD4B8 60%, #D2C6A6)",
                   }}
                 />
               </motion.div>
@@ -133,9 +133,9 @@ export default function ExcerptSection() {
           </button>
         </Reveal>
 
-        <div className="mt-10 min-h-[130px] flex items-start justify-center">
+        <div className="mt-10 min-h-[60px] flex items-start justify-center">
           <AnimatePresence mode="wait">
-            <motion.blockquote
+            <motion.p
               key={page}
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -144,8 +144,8 @@ export default function ExcerptSection() {
               className="font-display italic font-light text-lg sm:text-xl leading-relaxed text-[#F2EBE5]"
               data-testid="excerpt-quote"
             >
-              « {current.quote} »
-            </motion.blockquote>
+              {current.caption}
+            </motion.p>
           </AnimatePresence>
         </div>
 

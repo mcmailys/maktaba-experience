@@ -51,28 +51,19 @@ export const timelineEvents = [
 
 export const excerptPages = [
   {
-    image: "/assets/page-1.jpg",
-    quote:
-      "En vérité, il y a dans le cœur une désolation que rien ne peut dissiper sinon la compagnie d'Allah ; une solitude que rien ne peut rompre sinon l'isolement avec Lui ; un vide que rien ne comble, sinon Son amour et le rappel constant de Lui.",
+    image: "/assets/feuillet-1.jpg",
+    caption: "Bismillah ar-Rahmān ar-Rahīm — calligraphie d'ouverture de l'ouvrage",
   },
   {
-    image: "/assets/page-2.jpg",
-    quote:
-      "Les actions des cœurs sont la racine ; les actions des membres ne sont que leurs branches et leurs fruits. Le cœur est le roi et les membres sont ses soldats : s'il est sain, ils sont sains ; s'il est corrompu, ils se corrompent.",
+    image: "/assets/feuillet-2.jpg",
+    caption: "Transcription — le guide de prononciation des termes arabes",
   },
   {
-    image: "/assets/page-3.jpg",
-    quote:
-      "Ce bas-monde est un pont : traverse-le, et ne t'y installe pas. Regarde comme les heures te font franchir les étapes, une à une, jusqu'à ce que le voyage s'achève.",
+    image: "/assets/feuillet-3.jpg",
+    caption: "Biographie de l'imam Ibn Al Qayyim Al Jawziyyah — page 7",
   },
   {
-    image: "/assets/page-4.jpg",
-    quote:
-      "Le savoir n'est pas ce qui est rapporté ; le savoir est une lumière qu'Allah dépose dans le cœur.",
-  },
-  {
-    image: "/assets/page-5.jpg",
-    quote:
-      "La patience est la moitié de la foi, et la gratitude en est l'autre moitié. Qui perd la patience a perdu sa part de la foi.",
+    image: "/assets/feuillet-4.jpg",
+    caption: "Table des matières — page 167",
   },
 ];
