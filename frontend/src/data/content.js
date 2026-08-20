@@ -125,6 +125,7 @@ export const catalogBooks = [
   { id: "boukhari-t3", title: "Sahîh al-Boukhârî — Tome 3", author: "Imam al-Boukhârî", edition: "UIK", spine: "/assets/shelf/boukhari-t3.webp" },
   { id: "boukhari-t2", title: "Sahîh al-Boukhârî — Tome 2", author: "Imam al-Boukhârî", edition: "BO", spine: "/assets/shelf/boukhari-t2.webp" },
   { id: "muwatta-v2", title: "Al-Muwatta — Volume 2", author: "Imam Mâlik ibn Anas", edition: "Al Bayyinah", spine: "/assets/shelf/muwatta-v2.webp" },
+  { id: "pensees-precieuses", title: "Les Pensées Précieuses", author: "Ibn al-Jawzî", edition: "Tawbah", spine: "/assets/shelf/pensees-precieuses.webp" },
 ];
 
-export const defaultLibrary = ["boukhari-t3", "boukhari-t2", "muwatta-v2", "peches-guerison"];
+export const defaultLibrary = ["boukhari-t3", "boukhari-t2", "muwatta-v2", "pensees-precieuses", "peches-guerison"];

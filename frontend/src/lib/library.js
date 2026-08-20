@@ -3,11 +3,25 @@ import { catalogBooks, defaultLibrary } from "../data/content";
 
 const KEY = "mirath:library";
 const EVENT = "mirath:library";
+const VERSION_KEY = "mirath:library:v";
+const SEED_VERSION = 2;
 
 function read() {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const ids = JSON.parse(raw);
+      if (Number(localStorage.getItem(VERSION_KEY) || "1") >= SEED_VERSION) {
+        return ids;
+      }
+      const merged = [
+        ...ids,
+        ...defaultLibrary.filter((id) => !ids.includes(id)),
+      ];
+      localStorage.setItem(KEY, JSON.stringify(merged));
+      localStorage.setItem(VERSION_KEY, String(SEED_VERSION));
+      return merged;
+    }
   } catch {
     /* ignore */
   }
