@@ -92,7 +92,7 @@ export default function OtherBooks() {
         </p>
       </Reveal>
 
-      <div className="relative" data-lenis-prevent style={{ perspective: "1400px" }}>
+      <div className="relative" data-lenis-prevent>
         <motion.div
           drag="x"
           dragConstraints={{ left: leftBound, right: rightBound }}
@@ -105,29 +105,25 @@ export default function OtherBooks() {
           onHoverStart={() => (hoveringRef.current = true)}
           onHoverEnd={() => (hoveringRef.current = false)}
           style={{ x }}
-          className="flex w-max items-center gap-6 sm:gap-10 px-[calc(50vw_-_31vw)] sm:px-[calc(50vw_-_180px)] cursor-grab active:cursor-grabbing"
+          className="flex w-max items-center gap-8 sm:gap-12 px-[calc(50vw_-_23vw)] sm:px-[calc(50vw_-_160px)] cursor-grab active:cursor-grabbing"
           data-testid="other-books-track"
         >
           {otherBooks.map((book, i) => {
             const isActive = i === active;
-            const offset = i - active;
-            const dist = Math.abs(offset);
+            const dist = Math.abs(i - active);
             return (
               <div
                 key={book.title}
                 ref={(el) => (cardRefs.current[i] = el)}
-                className="shrink-0 w-[62vw] sm:w-[360px] text-center select-none"
+                className="shrink-0 w-[46vw] sm:w-[320px] text-center select-none"
                 data-testid={`other-book-${i}`}
               >
                 <motion.div
                   animate={{
-                    scale: isActive ? 1 : dist === 1 ? 0.74 : 0.6,
-                    opacity: isActive ? 1 : dist === 1 ? 0.55 : 0.28,
-                    rotateY: offset === 0 ? 0 : offset < 0 ? 32 : -32,
-                    filter: isActive ? "blur(0px)" : "blur(0.4px)",
+                    scale: isActive ? 1 : dist === 1 ? 0.72 : 0.58,
+                    opacity: isActive ? 1 : dist === 1 ? 0.5 : 0.25,
                   }}
                   transition={{ duration: 0.7, ease: EASE }}
-                  style={{ transformStyle: "preserve-3d" }}
                 >
                   <img
                     src={book.image}
@@ -140,7 +136,7 @@ export default function OtherBooks() {
                 <div className="mt-6 h-[80px]">
                   <motion.div
                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 14 }}
-                    transition={{ duration: 0.5, ease: EASE }}
+                    transition={{ duration: 0.5, delay: isActive ? 0.25 : 0, ease: EASE }}
                   >
                     <p
                       className="font-display font-light text-2xl sm:text-3xl text-[#F2EBE5] leading-tight"
