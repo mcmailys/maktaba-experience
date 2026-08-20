@@ -26,8 +26,7 @@ export default function Hero() {
       <div className="absolute inset-x-0 top-0 h-[68%]">
         <motion.img
           initial={{ opacity: 0, scale: 1.06 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 2.2, ease: EASE }}
           src={author.heroPortrait}
           alt="Portrait à l'huile d'Ibn Qayyim al-Jawziyyah"
