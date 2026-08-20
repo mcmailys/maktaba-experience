@@ -71,14 +71,14 @@ export const excerptPages = [
 export const chain = {
   masters: [
     { name: ["Ibn", "Taymiyya"], image: "/assets/chain/taymiyya.jpg" },
-    { name: ["Ibn ʿAbd", "al-Dāʾim"], image: "/assets/face.jpg" },
-    { name: ["Al-Mizzī"], image: "/assets/face.jpg" },
+    { name: ["Ibn ʿAbd", "al-Dāʾim"], image: "/assets/chain/abdal-daim.jpg" },
+    { name: ["Al-Mizzī"], image: "/assets/chain/mizzi.jpg" },
     { name: ["Ibn", "al-Shīrāzī"], image: "/assets/chain/shirazi.jpg" },
   ],
   students: [
     { name: ["Ibn", "Kathīr"], image: "/assets/chain/kathir.jpg" },
     { name: ["Ibn", "Rajab"], image: "/assets/chain/portrait-4.jpg" },
-    { name: ["Ibn ʿAbd", "al-Hādī"], image: "/assets/face.jpg" },
+    { name: ["Ibn ʿAbd", "al-Hādī"], image: "/assets/chain/abdal-hadi.jpg" },
   ],
 };
 

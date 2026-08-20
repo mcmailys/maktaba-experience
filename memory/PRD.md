@@ -78,11 +78,11 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 
 ## Itération 6 (20/08/2026) — Chaîne du Savoir + retouches
 - Nouvelle section « 02 — La Chaîne du Savoir » (`ChainChapter.jsx`) entre Timeline et Carte : SVG animé au scroll (tracés dorés qui se dessinent, nœuds portraits circulaires, anneaux pulsants), 4 maîtres à gauche / 3 élèves à droite / Ibn al-Qayyim au centre (nom FR + arabe), scroll horizontal sur mobile (data-lenis-prevent)
-- Portraits dédiés (20/08/2026, images utilisateur) : Ibn Taymiyya, Ibn al-Shīrāzī, Ibn Kathīr, Ibn Rajab (4ᵉ portrait attribué au hasard sur demande utilisateur) — recadrés carrés 400px dans /assets/chain/ ; les 3 autres (Ibn ʿAbd al-Dāʾim, Al-Mizzī, Ibn ʿAbd al-Hādī) gardent face.jpg EN ATTENTE d'images utilisateur
+- Portraits dédiés (20/08/2026, images utilisateur) : les 7 nœuds ont chacun leur portrait — Ibn Taymiyya, Ibn ʿAbd al-Dāʾim, Al-Mizzī, Ibn al-Shīrāzī, Ibn Kathīr, Ibn Rajab (4ᵉ portrait du 1er lot attribué au hasard sur demande utilisateur), Ibn ʿAbd al-Hādī — recadrés carrés 400px dans /assets/chain/
 - Carrousel « Du même univers » accéléré : auto-avance 3,2s → 2s (demande « ne défile pas assez vite ») — vérifié : 3 livres défilés en 6,6s
 - NB : numérotation des chapitres à harmoniser (chaîne = 02 mais « Son Lieu » est aussi 02) — non corrigé, en attente feu vert utilisateur
 
 ## Backlog priorisé
 - P0 : (aucun bloquant)
-- P1 : notification email au libraire à chaque commande (Resend) ; page admin des commandes ; portraits restants de la chaîne (images à venir de l'utilisateur) ; renumérotation des chapitres (proposée)
+- P1 : notification email au libraire à chaque commande (Resend) ; page admin des commandes ; renumérotation des chapitres (proposée)
 - P2 : multi-auteurs (routing /[slug], structure prête) ; versions HD des visuels (fournies par l'utilisateur ou régénérées) ; audio des extraits ; version arabe/anglaise
