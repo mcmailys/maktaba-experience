@@ -92,7 +92,7 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 - Favoris persistés en localStorage (« mirath:library ») + synchro inter-composants par CustomEvent ; pré-remplis avec les 4 tranches (defaultLibrary)
 - Ajout aux favoris : marque-page (Bookmark) sur chaque livre du carrousel + bouton « Ajouter à ma bibliothèque » sous la fiche du livre principal ; livres sans tranche fournie → tranche CSS générée (cuir sombre, titre vertical doré)
 - État vide : « Votre étagère est vide » + étagère seule
-- Ajout 20/08/2026 : « Les Pensées Précieuses » (Ibn al-Jawzî, Tawbah) — tranche pivotée horaire, ajoutée au catalogue + favoris par défaut ; migration versionnée localStorage (mirath:library:v, SEED_VERSION 2) pour fusionner les nouveautés chez les visiteurs existants ; tranches agrandies (h-28→h-32 mobile, sm:h-40→sm:h-44) sur demande « un peu plus gros » ; vérifié : badge 4→5 chez ancien visiteur, tranche debout lisible, détail OK
+- Ajout 20/08/2026 : « Les Pensées Précieuses » (Ibn al-Jawzî, Tawbah) — tranche pivotée horaire, ajoutée au catalogue + favoris par défaut ; migration versionnée localStorage (mirath:library:v, SEED_VERSION 2) pour fusionner les nouveautés chez les visiteurs existants ; tranches agrandies (h-28→h-32 mobile, sm:h-40→sm:h-44) sur demande « un peu plus gros » ; puis h-36 / sm:h-52 (« encore un peu plus grands ») — vérifié desktop + mobile, titres lisibles sur les tranches ; vérifié : badge 4→5 chez ancien visiteur, tranche debout lisible, détail OK
 - Vérifié e2e : badge 4 → détail Boukhari T3 → suppression (badge 3, tranche retirée, toast) → ajout carrousel (5) → ajout livre principal (6) → tranche CSS cliquable → vidage complet → état vide ; desktop + mobile
 
 ## Backlog priorisé

@@ -6,9 +6,9 @@ import { getBook, useLibrary } from "../lib/library";
 
 function CssSpine({ title }) {
   return (
-    <div className="h-32 sm:h-44 w-[38px] sm:w-[50px] rounded-[3px] bg-gradient-to-b from-[#1B1E26] via-[#13151A] to-[#0D0F13] border-x border-t border-[#D4AF37]/25 flex flex-col items-center justify-between py-2 shadow-[0_14px_28px_rgba(0,0,0,0.65)]">
+    <div className="h-36 sm:h-52 w-[42px] sm:w-[56px] rounded-[3px] bg-gradient-to-b from-[#1B1E26] via-[#13151A] to-[#0D0F13] border-x border-t border-[#D4AF37]/25 flex flex-col items-center justify-between py-2.5 shadow-[0_14px_28px_rgba(0,0,0,0.65)]">
       <span className="h-px w-3/4 bg-[#D4AF37]/60" />
-      <span className="[writing-mode:vertical-rl] font-display text-[11px] sm:text-sm leading-none text-[#D4AF37] tracking-wide overflow-hidden max-h-[72%]">
+      <span className="[writing-mode:vertical-rl] font-display text-xs sm:text-base leading-none text-[#D4AF37] tracking-wide overflow-hidden max-h-[72%]">
         {title}
       </span>
       <span className="h-px w-3/4 bg-[#D4AF37]/60" />
@@ -120,7 +120,7 @@ export default function Bibliotheque({ open, onClose }) {
                           src={b.spine}
                           alt={`Tranche — ${b.title}`}
                           draggable={false}
-                          className="h-32 sm:h-44 w-auto select-none shadow-[0_14px_28px_rgba(0,0,0,0.65)]"
+                          className="h-36 sm:h-52 w-auto select-none shadow-[0_14px_28px_rgba(0,0,0,0.65)]"
                         />
                       ) : (
                         <CssSpine title={b.title} />
