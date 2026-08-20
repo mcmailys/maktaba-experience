@@ -80,6 +80,7 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 - Nouvelle section « 02 — La Chaîne du Savoir » (`ChainChapter.jsx`) entre Timeline et Carte : SVG animé au scroll (tracés dorés qui se dessinent, nœuds portraits circulaires, anneaux pulsants), 4 maîtres à gauche / 3 élèves à droite / Ibn al-Qayyim au centre (nom FR + arabe), scroll horizontal sur mobile (data-lenis-prevent)
 - Portraits dédiés (20/08/2026, images utilisateur) : les 7 nœuds ont chacun leur portrait — Ibn Taymiyya, Ibn ʿAbd al-Dāʾim, Al-Mizzī, Ibn al-Shīrāzī, Ibn Kathīr, Ibn Rajab (4ᵉ portrait du 1er lot attribué au hasard sur demande utilisateur), Ibn ʿAbd al-Hādī — recadrés carrés 400px dans /assets/chain/
 - Carrousel « Du même univers » accéléré : auto-avance 3,2s → 2s (demande « ne défile pas assez vite ») — vérifié : 3 livres défilés en 6,6s
+- Chaîne scroll-driven (20/08/2026, demande utilisateur) : fini le swipe + la barre de scroll — sur mobile le schéma est ÉPINGLÉ (sticky) et le scroll vertical le translate horizontalement (x 0 → −overflow, mesuré au DOM, section = 100vh + overflow) ; desktop inchangé (tout tient à l'écran, pas de translation) ; vérifié : transform none → matrix(…,−310,0) en cours de scroll, overflow-x-auto supprimé
 - NB : numérotation des chapitres à harmoniser (chaîne = 02 mais « Son Lieu » est aussi 02) — non corrigé, en attente feu vert utilisateur
 
 ## Backlog priorisé

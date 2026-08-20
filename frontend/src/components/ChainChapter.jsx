@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import Reveal, { EASE } from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { chain } from "../data/content";
@@ -106,15 +106,51 @@ function NodeDot({ cx, delay, inView }) {
 }
 
 export default function ChainChapter() {
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
   const svgRef = useRef(null);
   const inView = useInView(svgRef, { once: true, margin: "-120px" });
+  const [overflow, setOverflow] = useState(0);
+
+  useEffect(() => {
+    const measure = () => {
+      if (trackRef.current) {
+        setOverflow(
+          Math.max(0, trackRef.current.scrollWidth - window.innerWidth)
+        );
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    const t = setTimeout(measure, 500);
+    return () => {
+      window.removeEventListener("resize", measure);
+      clearTimeout(t);
+    };
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+  const trackX = useTransform(scrollYProgress, [0, 1], [0, -overflow]);
+  const pinned = overflow > 0;
 
   return (
     <section
       id="chaine"
+      ref={sectionRef}
       data-testid="chain-chapter"
-      className="relative py-32 border-t border-white/10"
+      className="relative border-t border-white/10"
+      style={pinned ? { height: `calc(100vh + ${overflow}px)` } : undefined}
     >
+      <div
+        className={
+          pinned
+            ? "sticky top-0 flex h-screen flex-col justify-center overflow-hidden"
+            : "py-32"
+        }
+      >
       <div className="mx-auto max-w-xl px-6 text-center">
         <SectionHeading number="02" title="La Chaîne du Savoir" />
         <Reveal>
@@ -131,8 +167,13 @@ export default function ChainChapter() {
         </Reveal>
       </div>
 
-      <div className="mt-16 overflow-x-auto" data-lenis-prevent>
-        <div className="min-w-[760px] max-w-5xl mx-auto px-6">
+      <div className="mt-10 sm:mt-16 overflow-hidden">
+        <motion.div
+          ref={trackRef}
+          style={{ x: trackX }}
+          className="min-w-[700px] max-w-5xl sm:mx-auto px-6"
+          data-testid="chain-track"
+        >
           <svg
             ref={svgRef}
             viewBox="0 0 1000 540"
@@ -331,14 +372,9 @@ export default function ChainChapter() {
               />
             ))}
           </svg>
-        </div>
+        </motion.div>
       </div>
-
-      <Reveal className="sm:hidden text-center mt-8">
-        <p className="font-mono-archive text-[10px] tracking-[0.35em] uppercase text-[#A39E93]/70">
-          ← Faites glisser →
-        </p>
-      </Reveal>
+      </div>
     </section>
   );
 }
