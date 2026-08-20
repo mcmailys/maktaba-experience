@@ -9,6 +9,9 @@ export default function OtherBooks() {
   const [centers, setCenters] = useState([0]);
   const [active, setActive] = useState(0);
   const x = useMotionValue(0);
+  const activeRef = useRef(0);
+  const draggingRef = useRef(false);
+  const hoveringRef = useRef(false);
 
   const n = otherBooks.length;
 
@@ -35,6 +38,7 @@ export default function OtherBooks() {
     const clamped = Math.max(0, Math.min(n - 1, index));
     animate(x, snapX(clamped), { type: "spring", stiffness: 220, damping: 30 });
     setActive(clamped);
+    activeRef.current = clamped;
   };
 
   const onDragEnd = () => {
@@ -49,7 +53,20 @@ export default function OtherBooks() {
       }
     });
     snapTo(best);
+    setTimeout(() => {
+      draggingRef.current = false;
+    }, 900);
   };
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      if (draggingRef.current || hoveringRef.current || centers.length < 2)
+        return;
+      snapTo((activeRef.current + 1) % n);
+    }, 3200);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [centers, n]);
 
   const leftBound = centers.length > 1 ? snapX(n - 1) : 0;
   const rightBound = centers.length > 1 ? snapX(0) : 0;
@@ -81,7 +98,12 @@ export default function OtherBooks() {
           dragConstraints={{ left: leftBound, right: rightBound }}
           dragElastic={0.08}
           dragMomentum={false}
+          onDragStart={() => {
+            draggingRef.current = true;
+          }}
           onDragEnd={onDragEnd}
+          onHoverStart={() => (hoveringRef.current = true)}
+          onHoverEnd={() => (hoveringRef.current = false)}
           style={{ x }}
           className="flex w-max items-center gap-14 sm:gap-24 px-[calc(50vw_-_31vw)] sm:px-[calc(50vw_-_180px)] cursor-grab active:cursor-grabbing"
           data-testid="other-books-track"
