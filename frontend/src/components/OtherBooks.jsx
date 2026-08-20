@@ -33,16 +33,16 @@ export default function OtherBooks() {
 
   const snapTo = (index) => {
     const clamped = Math.max(0, Math.min(n - 1, index));
-    animate(x, snapX(clamped), { type: "spring", stiffness: 260, damping: 32 });
+    animate(x, snapX(clamped), { type: "spring", stiffness: 220, damping: 30 });
     setActive(clamped);
   };
 
-  const onDragEnd = (_, info) => {
-    const projected = x.get() + info.velocity.x * 0.18;
+  const onDragEnd = () => {
+    const current = x.get();
     let best = 0;
     let bestDist = Infinity;
     centers.forEach((c, i) => {
-      const d = Math.abs(snapX(i) - projected);
+      const d = Math.abs(snapX(i) - current);
       if (d < bestDist) {
         bestDist = d;
         best = i;
@@ -79,7 +79,8 @@ export default function OtherBooks() {
         <motion.div
           drag="x"
           dragConstraints={{ left: leftBound, right: rightBound }}
-          dragElastic={0.12}
+          dragElastic={0.08}
+          dragMomentum={false}
           onDragEnd={onDragEnd}
           style={{ x }}
           className="flex w-max items-center gap-14 sm:gap-24 px-[calc(50vw_-_31vw)] sm:px-[calc(50vw_-_180px)] cursor-grab active:cursor-grabbing"
