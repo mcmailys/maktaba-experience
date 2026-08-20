@@ -92,7 +92,7 @@ export default function OtherBooks() {
         </p>
       </Reveal>
 
-      <div className="relative" data-lenis-prevent>
+      <div className="relative" data-lenis-prevent style={{ perspective: "1400px" }}>
         <motion.div
           drag="x"
           dragConstraints={{ left: leftBound, right: rightBound }}
@@ -105,11 +105,13 @@ export default function OtherBooks() {
           onHoverStart={() => (hoveringRef.current = true)}
           onHoverEnd={() => (hoveringRef.current = false)}
           style={{ x }}
-          className="flex w-max items-center gap-14 sm:gap-24 px-[calc(50vw_-_31vw)] sm:px-[calc(50vw_-_180px)] cursor-grab active:cursor-grabbing"
+          className="flex w-max items-center gap-6 sm:gap-10 px-[calc(50vw_-_31vw)] sm:px-[calc(50vw_-_180px)] cursor-grab active:cursor-grabbing"
           data-testid="other-books-track"
         >
           {otherBooks.map((book, i) => {
             const isActive = i === active;
+            const offset = i - active;
+            const dist = Math.abs(offset);
             return (
               <div
                 key={book.title}
@@ -119,11 +121,13 @@ export default function OtherBooks() {
               >
                 <motion.div
                   animate={{
-                    scale: isActive ? 1 : 0.82,
-                    opacity: isActive ? 1 : 0.35,
-                    filter: isActive ? "blur(0px)" : "blur(1.5px)",
+                    scale: isActive ? 1 : dist === 1 ? 0.74 : 0.6,
+                    opacity: isActive ? 1 : dist === 1 ? 0.55 : 0.28,
+                    rotateY: offset === 0 ? 0 : offset < 0 ? 32 : -32,
+                    filter: isActive ? "blur(0px)" : "blur(0.4px)",
                   }}
-                  transition={{ duration: 0.6, ease: EASE }}
+                  transition={{ duration: 0.7, ease: EASE }}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
                   <img
                     src={book.image}
