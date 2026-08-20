@@ -38,7 +38,7 @@ export default function TimelineChapter() {
         </div>
 
         <Reveal data-testid="timeline-track-wrapper">
-          <div ref={trackRef} className="timeline-track" data-testid="timeline-track">
+          <div ref={trackRef} className="timeline-track ml-[30vw] sm:ml-[20vw]" data-testid="timeline-track">
             {items.map((event, i) => (
               <div
                 key={`${event.year}-${i}`}
