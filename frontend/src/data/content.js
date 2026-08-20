@@ -67,3 +67,31 @@ export const excerptPages = [
     caption: "Table des matières — page 167",
   },
 ];
+
+export const otherBooks = [
+  {
+    title: "Péchés et Guérison",
+    subtitle: "Ibn Al-Qayyim",
+    image: "/assets/books/book-1.png",
+  },
+  {
+    title: "L'Esprit de l'Âme",
+    subtitle: "Al-Ghazâli · Ibn Al-Jawzi · Ibn Qudâmah",
+    image: "/assets/books/book-2.png",
+  },
+  {
+    title: "Les Intrigues du Diable",
+    subtitle: "Ibn Al-Qayyim",
+    image: "/assets/books/book-3.png",
+  },
+  {
+    title: "Ainsi était Muhammad le Messager d'Allah",
+    subtitle: "Éditions Tawbah",
+    image: "/assets/books/book-4.png",
+  },
+  {
+    title: "Ainsi étaient Nos Pieux Prédécesseurs",
+    subtitle: "Éditions Tawbah",
+    image: "/assets/books/book-5.png",
+  },
+];

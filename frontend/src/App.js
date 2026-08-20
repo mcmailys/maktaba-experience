@@ -7,6 +7,7 @@ import TimelineChapter from "./components/TimelineChapter";
 import MapChapter from "./components/MapChapter";
 import BookChapter from "./components/BookChapter";
 import ExcerptSection from "./components/ExcerptSection";
+import OtherBooks from "./components/OtherBooks";
 import OrderSection from "./components/OrderSection";
 import Footer from "./components/Footer";
 
@@ -39,6 +40,7 @@ export default function App() {
         <MapChapter />
         <BookChapter />
         <ExcerptSection />
+        <OtherBooks />
         <OrderSection />
       </main>
       <Footer />

@@ -54,7 +54,7 @@ export default function OrderSection() {
       className="relative py-32 border-t border-white/10"
     >
       <div className="mx-auto max-w-xl px-6 text-center">
-        <SectionHeading number="05" title="Recevoir l'Ouvrage" />
+        <SectionHeading number="06" title="Recevoir l'Ouvrage" />
         <Reveal>
           <h2 className="font-display font-light text-3xl sm:text-4xl lg:text-5xl leading-tight text-[#F2EBE5]">
             Recevoir <span className="italic text-[#D4AF37]">l'ouvrage</span>
