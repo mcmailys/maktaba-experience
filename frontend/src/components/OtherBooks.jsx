@@ -105,7 +105,7 @@ export default function OtherBooks() {
           onHoverStart={() => (hoveringRef.current = true)}
           onHoverEnd={() => (hoveringRef.current = false)}
           style={{ x }}
-          className="flex w-max items-center gap-8 sm:gap-12 px-[calc(50vw_-_23vw)] sm:px-[calc(50vw_-_160px)] cursor-grab active:cursor-grabbing"
+          className="flex w-max items-center gap-4 sm:gap-12 px-[calc(50vw_-_22vw)] sm:px-[calc(50vw_-_160px)] cursor-grab active:cursor-grabbing"
           data-testid="other-books-track"
         >
           {otherBooks.map((book, i) => {
@@ -115,7 +115,7 @@ export default function OtherBooks() {
               <div
                 key={book.title}
                 ref={(el) => (cardRefs.current[i] = el)}
-                className="shrink-0 w-[46vw] sm:w-[320px] text-center select-none"
+                className="shrink-0 w-[44vw] sm:w-[320px] text-center select-none"
                 data-testid={`other-book-${i}`}
               >
                 <motion.div
@@ -129,7 +129,7 @@ export default function OtherBooks() {
                     src={book.image}
                     alt={`Couverture — ${book.title}`}
                     draggable={false}
-                    className="h-[36vh] sm:h-[44vh] w-auto mx-auto pointer-events-none drop-shadow-[0_40px_70px_rgba(0,0,0,0.75)]"
+                    className="w-full h-auto sm:w-auto sm:h-[44vh] mx-auto pointer-events-none drop-shadow-[0_40px_70px_rgba(0,0,0,0.75)]"
                     data-testid={isActive ? "other-book-image" : undefined}
                   />
                 </motion.div>
@@ -159,7 +159,7 @@ export default function OtherBooks() {
           disabled={active === 0}
           data-testid="carousel-prev-button"
           aria-label="Livre précédent"
-          className="absolute left-4 sm:left-10 top-[38%] z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 backdrop-blur text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-30 transition-colors duration-300"
+          className="hidden sm:flex absolute left-4 sm:left-10 top-[38%] z-10 h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 backdrop-blur text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-30 transition-colors duration-300"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -168,7 +168,7 @@ export default function OtherBooks() {
           disabled={active === n - 1}
           data-testid="carousel-next-button"
           aria-label="Livre suivant"
-          className="absolute right-4 sm:right-10 top-[38%] z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 backdrop-blur text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-30 transition-colors duration-300"
+          className="hidden sm:flex absolute right-4 sm:right-10 top-[38%] z-10 h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/60 backdrop-blur text-[#F2EBE5] hover:border-[#D4AF37] hover:text-[#D4AF37] disabled:opacity-30 transition-colors duration-300"
         >
           <ChevronRight className="h-5 w-5" />
         </button>
