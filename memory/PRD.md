@@ -85,6 +85,15 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 - Timeline décalée à gauche (20/08/2026, demande utilisateur) : marge vide ml-[30vw] sm:ml-[20vw] sur la piste pour que le 1er point (1292) démarre décalé du bord et reste lisible ~11s avant de sortir (marge = hors largeur animée, boucle infinie -50% préservée) ; vérifié mobile : 1292 démarre à left≈117px, encore visible après 4s
 - NB : numérotation des chapitres à harmoniser (chaîne = 02 mais « Son Lieu » est aussi 02) — non corrigé, en attente feu vert utilisateur
 
+## Itération 7 (20/08/2026) — Bibliothèque de favoris
+- Onglet « Bibliothèque » dans le header (icône Library + badge compteur, libellé masqué sur mobile) ouvrant un modal plein écran
+- Étagère murale (image utilisateur recadrée sur la planche) avec tranches DEBOUT collées les unes aux autres : les 4 tranches fournies (couchées) ont été pivotées (Boukhari T2/T3 + Muwatta V2 : rotation anti-horaire ; Péchés et Guérison : horaire), recadrées sur leur bbox alpha, hauteur 720px, dans /assets/shelf/
+- Clic sur une tranche → fiche détail (titre, auteur, édition) + bouton « Retirer » (toast + animation, les autres tranches se réajustent via layout framer-motion) ; tranche sélectionnée soulevée avec lueur dorée
+- Favoris persistés en localStorage (« mirath:library ») + synchro inter-composants par CustomEvent ; pré-remplis avec les 4 tranches (defaultLibrary)
+- Ajout aux favoris : marque-page (Bookmark) sur chaque livre du carrousel + bouton « Ajouter à ma bibliothèque » sous la fiche du livre principal ; livres sans tranche fournie → tranche CSS générée (cuir sombre, titre vertical doré)
+- État vide : « Votre étagère est vide » + étagère seule
+- Vérifié e2e : badge 4 → détail Boukhari T3 → suppression (badge 3, tranche retirée, toast) → ajout carrousel (5) → ajout livre principal (6) → tranche CSS cliquable → vidage complet → état vide ; desktop + mobile
+
 ## Backlog priorisé
 - P0 : (aucun bloquant)
 - P1 : notification email au libraire à chaque commande (Resend) ; page admin des commandes ; renumérotation des chapitres (proposée)

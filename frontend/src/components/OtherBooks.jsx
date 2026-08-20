@@ -1,10 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Bookmark, ChevronLeft, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
 import Reveal, { EASE } from "./Reveal";
 import { otherBooks } from "../data/content";
+import { useLibrary } from "../lib/library";
 
 export default function OtherBooks() {
+  const { has, toggle } = useLibrary();
+
+  const toggleFavorite = (book) => {
+    const added = toggle(book.id);
+    toast.success(
+      added
+        ? `« ${book.title} » ajouté à votre bibliothèque`
+        : `« ${book.title} » retiré de votre bibliothèque`
+    );
+  };
+
   const cardRefs = useRef([]);
   const [centers, setCenters] = useState([0]);
   const [active, setActive] = useState(0);
@@ -115,9 +128,26 @@ export default function OtherBooks() {
               <div
                 key={book.title}
                 ref={(el) => (cardRefs.current[i] = el)}
-                className="shrink-0 w-[44vw] sm:w-[320px] text-center select-none"
+                className="relative shrink-0 w-[44vw] sm:w-[320px] text-center select-none"
                 data-testid={`other-book-${i}`}
               >
+                <button
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onClick={() => toggleFavorite(book)}
+                  data-testid={`favorite-toggle-${book.id}`}
+                  aria-label={
+                    has(book.id)
+                      ? `Retirer ${book.title} de ma bibliothèque`
+                      : `Ajouter ${book.title} à ma bibliothèque`
+                  }
+                  className="absolute top-0 right-1 sm:right-2 z-10 p-2 text-[#A39E93] hover:text-[#D4AF37] transition-colors duration-300"
+                >
+                  <Bookmark
+                    className={`h-4 w-4 sm:h-5 sm:w-5 transition-colors duration-300 ${
+                      has(book.id) ? "fill-[#D4AF37] text-[#D4AF37]" : ""
+                    }`}
+                  />
+                </button>
                 <motion.div
                   animate={{
                     scale: isActive ? 1 : dist === 1 ? 0.72 : 0.58,

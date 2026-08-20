@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useScroll, useSpring, useMotionValueEvent } from "framer-motion";
 import {
   BookMarked,
+  Bookmark,
   FileText,
   Globe,
   Minus,
@@ -12,6 +13,7 @@ import { toast } from "sonner";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { author } from "../data/content";
+import { useLibrary } from "../lib/library";
 
 const FRAME_COUNT = 101;
 const frameSrc = (i) =>
@@ -29,6 +31,16 @@ export default function BookChapter() {
   const imagesRef = useRef([]);
   const targetRef = useRef(0);
   const [qty, setQty] = useState(1);
+  const { has, toggle } = useLibrary();
+
+  const toggleLibrary = () => {
+    const added = toggle("meditations");
+    toast.success(
+      added
+        ? "« Les Méditations » ajouté à votre bibliothèque"
+        : "« Les Méditations » retiré de votre bibliothèque"
+    );
+  };
 
   const draw = (index) => {
     const canvas = canvasRef.current;
@@ -199,13 +211,29 @@ export default function BookChapter() {
               Ajouter au panier — {author.book.price}
             </button>
           </div>
-          <a
-            href="#extrait"
-            data-testid="discover-excerpt-button"
-            className="mt-6 inline-block text-sm font-light text-[#A39E93] underline decoration-[#D4AF37]/50 underline-offset-4 hover:text-[#D4AF37] transition-colors duration-300"
-          >
-            Feuilleter l'extrait
-          </a>
+          <div className="mt-6 flex flex-col items-center gap-4">
+            <a
+              href="#extrait"
+              data-testid="discover-excerpt-button"
+              className="inline-block text-sm font-light text-[#A39E93] underline decoration-[#D4AF37]/50 underline-offset-4 hover:text-[#D4AF37] transition-colors duration-300"
+            >
+              Feuilleter l&apos;extrait
+            </a>
+            <button
+              onClick={toggleLibrary}
+              data-testid="library-toggle-main-book"
+              className="inline-flex items-center gap-2 font-mono-archive text-[10px] tracking-[0.25em] uppercase text-[#A39E93] hover:text-[#D4AF37] transition-colors duration-300"
+            >
+              <Bookmark
+                className={`h-4 w-4 transition-colors duration-300 ${
+                  has("meditations") ? "fill-[#D4AF37] text-[#D4AF37]" : ""
+                }`}
+              />
+              {has("meditations")
+                ? "Dans votre bibliothèque"
+                : "Ajouter à ma bibliothèque"}
+            </button>
+          </div>
         </Reveal>
       </div>
     </section>

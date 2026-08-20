@@ -84,28 +84,47 @@ export const chain = {
 
 export const otherBooks = [
   {
+    id: "peches-guerison",
     title: "Péchés et Guérison",
     subtitle: "Ibn Al-Qayyim",
     image: "/assets/books/book-1.png",
   },
   {
+    id: "esprit-ame",
     title: "L'Esprit de l'Âme",
     subtitle: "Al-Ghazâli · Ibn Al-Jawzi · Ibn Qudâmah",
     image: "/assets/books/book-2.png",
   },
   {
+    id: "intrigues-diable",
     title: "Les Intrigues du Diable",
     subtitle: "Ibn Al-Qayyim",
     image: "/assets/books/book-3.png",
   },
   {
+    id: "ainsi-muhammad",
     title: "Ainsi était Muhammad le Messager d'Allah",
     subtitle: "Éditions Tawbah",
     image: "/assets/books/book-4.png",
   },
   {
+    id: "pieux-predecesseurs",
     title: "Ainsi étaient Nos Pieux Prédécesseurs",
     subtitle: "Éditions Tawbah",
     image: "/assets/books/book-5.png",
   },
 ];
+
+export const catalogBooks = [
+  { id: "meditations", title: "Les Méditations", author: "Ibn al-Qayyim al-Jawziyya", edition: "Tawbah", spine: null },
+  { id: "peches-guerison", title: "Péchés et Guérison", author: "Ibn al-Qayyim al-Jawziyya", edition: "Tawbah", spine: "/assets/shelf/peches-guerison.webp" },
+  { id: "esprit-ame", title: "L'Esprit de l'Âme", author: "Al-Ghazâli · Ibn Al-Jawzi · Ibn Qudâmah", edition: "Tawbah", spine: null },
+  { id: "intrigues-diable", title: "Les Intrigues du Diable", author: "Ibn al-Qayyim al-Jawziyya", edition: "Tawbah", spine: null },
+  { id: "ainsi-muhammad", title: "Ainsi était Muhammad le Messager d'Allah", author: "Éditions Tawbah", edition: "Tawbah", spine: null },
+  { id: "pieux-predecesseurs", title: "Ainsi étaient Nos Pieux Prédécesseurs", author: "Éditions Tawbah", edition: "Tawbah", spine: null },
+  { id: "boukhari-t3", title: "Sahîh al-Boukhârî — Tome 3", author: "Imam al-Boukhârî", edition: "UIK", spine: "/assets/shelf/boukhari-t3.webp" },
+  { id: "boukhari-t2", title: "Sahîh al-Boukhârî — Tome 2", author: "Imam al-Boukhârî", edition: "BO", spine: "/assets/shelf/boukhari-t2.webp" },
+  { id: "muwatta-v2", title: "Al-Muwatta — Volume 2", author: "Imam Mâlik ibn Anas", edition: "Al Bayyinah", spine: "/assets/shelf/muwatta-v2.webp" },
+];
+
+export const defaultLibrary = ["boukhari-t3", "boukhari-t2", "muwatta-v2", "peches-guerison"];
