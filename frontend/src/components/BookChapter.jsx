@@ -81,7 +81,7 @@ export default function BookChapter() {
   return (
     <section id="oeuvre" data-testid="book-chapter" className="relative pt-20">
       <div className="mx-auto max-w-xl px-6 -mb-10">
-        <SectionHeading number="03" title="Son Œuvre" />
+        <SectionHeading number="04" title="Son Œuvre" />
       </div>
 
       <div

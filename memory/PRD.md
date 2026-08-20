@@ -76,7 +76,13 @@ L'utilisateur a rejeté le zoom d'image statique. Nouvelle implémentation : car
 - Vidéo alpha + fond (19/08/2026, demande utilisateur) : le canal alpha de finish.mov est un vrai détourage (63% transparent) → encodage WebM VP9 avec transparence (book-alpha.webm) ; image de fond bibliothèque (library-bg.jpg, opacité 30% + voile) derrière le livre — plus aucun cadre visible. Initialement cachée sur Safari (pas de VP9 alpha), puis activée pour TOUS (demande utilisateur qui ne la voyait pas sur mobile) : sur Safari la vidéo MP4 à fond uni se superpose à l'image assombrie, cadre quasi invisible (mesures pixel quasi identiques). autoPlay rétabli pour l'affichage immédiat de la première frame sur iOS. Espacements resserrés : zone sticky 240vh → 160vh, pt-32 → pt-24, pb-32 → pb-24
 - Vérifié en captures à 3 profondeurs (monde, Syrie illuminée ×7.4, Damas ×8.5) + captures routes (dessin ×7.6 et final ×8.5) + captures plein écran (monde, Syrie ×6.8, Damas ×8.5)
 
+## Itération 6 (20/08/2026) — Chaîne du Savoir + retouches
+- Nouvelle section « 02 — La Chaîne du Savoir » (`ChainChapter.jsx`) entre Timeline et Carte : SVG animé au scroll (tracés dorés qui se dessinent, nœuds portraits circulaires, anneaux pulsants), 4 maîtres à gauche / 3 élèves à droite / Ibn al-Qayyim au centre (nom FR + arabe), scroll horizontal sur mobile (data-lenis-prevent)
+- Portraits dédiés (20/08/2026, images utilisateur) : Ibn Taymiyya, Ibn al-Shīrāzī, Ibn Kathīr, Ibn Rajab (4ᵉ portrait attribué au hasard sur demande utilisateur) — recadrés carrés 400px dans /assets/chain/ ; les 3 autres (Ibn ʿAbd al-Dāʾim, Al-Mizzī, Ibn ʿAbd al-Hādī) gardent face.jpg EN ATTENTE d'images utilisateur
+- Carrousel « Du même univers » accéléré : auto-avance 3,2s → 2s (demande « ne défile pas assez vite ») — vérifié : 3 livres défilés en 6,6s
+- NB : numérotation des chapitres à harmoniser (chaîne = 02 mais « Son Lieu » est aussi 02) — non corrigé, en attente feu vert utilisateur
+
 ## Backlog priorisé
 - P0 : (aucun bloquant)
-- P1 : notification email au libraire à chaque commande (Resend) ; page admin des commandes
+- P1 : notification email au libraire à chaque commande (Resend) ; page admin des commandes ; portraits restants de la chaîne (images à venir de l'utilisateur) ; renumérotation des chapitres (proposée)
 - P2 : multi-auteurs (routing /[slug], structure prête) ; versions HD des visuels (fournies par l'utilisateur ou régénérées) ; audio des extraits ; version arabe/anglaise

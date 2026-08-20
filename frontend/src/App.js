@@ -4,6 +4,7 @@ import { Toaster } from "sonner";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import TimelineChapter from "./components/TimelineChapter";
+import ChainChapter from "./components/ChainChapter";
 import MapChapter from "./components/MapChapter";
 import BookChapter from "./components/BookChapter";
 import ExcerptSection from "./components/ExcerptSection";
@@ -37,6 +38,7 @@ export default function App() {
       <main>
         <Hero />
         <TimelineChapter />
+        <ChainChapter />
         <MapChapter />
         <BookChapter />
         <ExcerptSection />

@@ -63,7 +63,7 @@ export default function OtherBooks() {
       if (draggingRef.current || hoveringRef.current || centers.length < 2)
         return;
       snapTo((activeRef.current + 1) % n);
-    }, 3200);
+    }, 2000);
     return () => clearInterval(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [centers, n]);
@@ -80,9 +80,9 @@ export default function OtherBooks() {
       <Reveal className="text-center mb-10 px-6">
         <p
           className="font-mono-archive text-[11px] tracking-[0.4em] uppercase text-[#D4AF37]"
-          data-testid="section-heading-05"
+          data-testid="section-heading-06"
         >
-          05 — Autres Livres
+          06 — Autres Livres
         </p>
         <h2 className="mt-6 font-display font-light text-3xl sm:text-4xl lg:text-5xl leading-tight text-[#F2EBE5]">
           Du même <span className="italic text-[#D4AF37]">univers</span>

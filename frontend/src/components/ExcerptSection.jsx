@@ -47,7 +47,7 @@ export default function ExcerptSection() {
   return (
     <section id="extrait" data-testid="excerpt-section" className="relative pt-16 pb-32">
       <div className="mx-auto max-w-xl px-6 text-center">
-        <SectionHeading number="04" title="Lire un Extrait" />
+        <SectionHeading number="05" title="Lire un Extrait" />
         <Reveal>
           <h2 className="font-display font-light text-3xl sm:text-4xl lg:text-5xl leading-tight text-[#F2EBE5]">
             Feuilletez <span className="italic text-[#D4AF37]">quelques pages</span>

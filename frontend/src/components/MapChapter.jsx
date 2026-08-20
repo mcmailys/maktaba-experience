@@ -183,9 +183,9 @@ export default function MapChapter() {
           <motion.div style={{ opacity: titleOpacity, y: titleY }} className="text-center mt-10">
             <p
               className="font-mono-archive text-[11px] tracking-[0.4em] uppercase text-[#D4AF37]"
-              data-testid="section-heading-02"
+              data-testid="section-heading-03"
             >
-              02 — Son Lieu
+              03 — Son Lieu
             </p>
             <h2 className="mt-8 font-display font-light text-3xl sm:text-4xl lg:text-5xl leading-tight text-[#F2EBE5]">
               Damas,
