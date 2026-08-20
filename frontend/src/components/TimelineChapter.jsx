@@ -12,9 +12,9 @@ export default function TimelineChapter() {
     if (!track) return;
     const obs = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) track.classList.add("timeline-running");
+        track.classList.toggle("timeline-running", entry.isIntersecting);
       },
-      { threshold: 0.02 }
+      { threshold: 0, rootMargin: "0px 0px -40% 0px" }
     );
     obs.observe(track);
     return () => obs.disconnect();
